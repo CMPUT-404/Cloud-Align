@@ -1,6 +1,8 @@
-.code-box-demo p {
-    width: 300px;
-    height: 300px;
+.code-box-demo {
+    width: 80%;
+    height: 60%;
   }
-  .ant-card { margin-bottom: 30px; }
+.ant-card { 
+  margin-bottom: 60px; 
+}
   

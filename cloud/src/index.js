@@ -4,8 +4,7 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
 import App from './App';
-import CardContent from './components/CardContent'
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu} from 'antd';
 
 const { Header, Content, Footer } = Layout;
 
@@ -25,7 +24,6 @@ ReactDOM.render(
       </Menu>
     </Header>
     <Content style={{ padding: '0 50px', marginTop: 64 }}>
-        <CardContent />
         <App />
     </Content>
     <Footer style={{ textAlign: 'center' }}>Cloud-Align</Footer>

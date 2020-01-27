@@ -26,6 +26,10 @@
   color: white;
 }
 
+#InputBox{
+  top: 40px;
+}
+
 .App-link {
   color: #61dafb;
 }
