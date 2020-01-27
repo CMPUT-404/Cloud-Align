@@ -3,14 +3,16 @@ import Post from './Post'
 import './App.css';
 import PostsData from './PostsData'
 
-function App() {
-  const PostCompnents = PostsData.map(item => <Post post={item}/>)
+class App extends React.Component {
+  render(){
+    const PostCompnents = PostsData.map(item => <Post post={item}/>)
   
-  return (
-    <div className="App">
-      {PostCompnents}
-    </div>
-  );
-}
+    return (
+      <div className="App">
+        {PostCompnents}
+      </div>
+    )
 
-export default App;
+  }
+}
+export default App
