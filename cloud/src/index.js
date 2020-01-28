@@ -18,9 +18,9 @@ ReactDOM.render(
         defaultSelectedKeys={['2']}
         style={{ lineHeight: '64px' }}
       >
-        <Menu.Item key="1">Profile</Menu.Item>
-        <Menu.Item key="2">Timeline</Menu.Item>
-        <Menu.Item key="3">Friends</Menu.Item>
+          <Menu.Item key="1">Profile</Menu.Item>
+          <Menu.Item key="2">Timeline</Menu.Item>
+          <Menu.Item key="3">Friends</Menu.Item>
       </Menu>
     </Header>
     <Content style={{ padding: '0 50px', marginTop: 64 }}>
