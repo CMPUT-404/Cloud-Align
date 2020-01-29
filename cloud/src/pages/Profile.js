@@ -8,7 +8,7 @@ class Profile extends React.Component {
       
       <div>
         <div>
-        <img id="profile_pic" src={require('../images/pepe.jpeg')} />
+        <img id="profile_pic" src={require('../Images/pepe.jpeg')} />
         <h1>Name</h1>
         <button id='add_button'>
         {/* <img id="add_button_img" src={require('../images/add_button.jpeg')} /> */}
