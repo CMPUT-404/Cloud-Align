@@ -1,15 +1,29 @@
-#profile_pic {
-    border-radius: 30%;
-    
-}
 
 #add_button{
-    height: 20%;
-    width: 20%;
+    position: relative;
+    bottom: 85px;
+    left: 135px;
+    height: 15%;
+    width: auto;
 
 }
 
-#add_button_img{
-    height:20%;
-    width: 20%;
+
+
+.container {
+    position: absolute;
+    left: 500px;
+    width: 500px;
+    height: 200px;
+   
 }
+
+
+.container img#profile_pic{
+    position:relative;
+    left: 60px;
+    border-radius: 30%;
+    width:100%;
+}
+
+

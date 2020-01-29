@@ -1,21 +1,28 @@
 import React from 'react';
-import './css/Profile.css'
+
+import Basic_profile from './Models/Basic_profile'
+
+import Test from './Models/test'
 
 
 class Profile extends React.Component {
-  render(){  
+  
+  
+  render(){ 
+    const junk = [1,2,3,4]
     return (
-      
-      <div>
-        <div>
-        <img id="profile_pic" src={require('../images/pepe.jpeg')} />
-        <h1>Name</h1>
-        <button id='add_button'>
-        {/* <img id="add_button_img" src={require('../images/add_button.jpeg')} /> */}
-        </button>
-        </div>
-        <h4>This page should display the user profile, including avator, posts from the user...</h4>
+      <div className="Profile">
+
+        
+        <Basic_profile id="1"/>
+        {/* <div style={{position:"relative", top:"500px"}}>
+        <Basic_profile id="1"/>
+        </div> */}
       </div>
+      
+        
+     
+      
     )
 
   }
