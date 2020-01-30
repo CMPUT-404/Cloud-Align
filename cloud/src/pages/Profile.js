@@ -3,21 +3,42 @@ import React from 'react';
 import Basic_profile from './Models/Basic_profile'
 
 import Test from './Models/test'
+import './css/Profile.css'
 
 
 class Profile extends React.Component {
   
-  
-  render(){ 
-    const junk = [1,2,3,4]
-    return (
-      <div className="Profile">
 
+  render(){ 
+    var TTest = JSON.parse(`
+
+    {
+        "id": 12121212121212,
+        "shadow": true,
+        "cow": "moo",
+        "cats":[
+            {
+                "noise":"meo"
+            }
+        ]
+    
+    }
+    
+    `)
+    
+    return (
+      <div className="Profile" >
+
+       
+        {/* <Basic_profile /> */}
         
-        <Basic_profile id="1"/>
-        {/* <div style={{position:"relative", top:"500px"}}>
-        <Basic_profile id="1"/>
-        </div> */}
+
+        <form id="form" style={{top: "800px"}}>
+          <input type="text" placeholder="name" ></input>
+          <input type="text" placeholder="Email"></input>
+          {TTest.id}
+        </form>
+        
       </div>
       
         

@@ -1,29 +1,3 @@
 
-#add_button{
-    position: relative;
-    bottom: 85px;
-    left: 135px;
-    height: 15%;
-    width: auto;
-
-}
-
-
-
-.container {
-    position: absolute;
-    left: 500px;
-    width: 500px;
-    height: 200px;
-   
-}
-
-
-.container img#profile_pic{
-    position:relative;
-    left: 60px;
-    border-radius: 30%;
-    width:100%;
-}
 
 

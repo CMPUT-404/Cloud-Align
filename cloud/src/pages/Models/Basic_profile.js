@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Profile.css'
+import '../css/Basic_profile.css'
 class Basic_profile extends React.Component{
     constructor(){
         super()

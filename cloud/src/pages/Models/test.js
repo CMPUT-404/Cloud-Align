@@ -1,14 +1,25 @@
-import React from 'react';
-
-class Test extends React.Component{
 
 
-    render(){
-        return(
-            <div>cowww</div>
-        )
-    }
+
+var jsontest = 
+`
+
+{
+    id: 12121212121212,
+    shadow: true,
+    cow: "moo",
+    cats:[
+        {
+            noise:"meo"
+        }
+    ]
 
 }
 
-export default Test
+`
+
+
+
+
+
+export default jsontest
