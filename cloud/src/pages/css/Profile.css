@@ -1,3 +1,14 @@
+.form{
+    position: relative;
+    top: 200px;
+}
 
+.form input{
+
+    border-color: rgb(187, 255, 0);
+    width:700px;
+
+
+}
 
 

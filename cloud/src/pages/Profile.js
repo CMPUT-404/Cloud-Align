@@ -5,38 +5,30 @@ import Basic_profile from './Models/Basic_profile'
 import Test from './Models/test'
 import './css/Profile.css'
 
+import data from './Data/Profile_data'
+
 
 class Profile extends React.Component {
   
 
-  render(){ 
-    var TTest = JSON.parse(`
+  
 
-    {
-        "id": 12121212121212,
-        "shadow": true,
-        "cow": "moo",
-        "cats":[
-            {
-                "noise":"meo"
-            }
-        ]
+  render(){ 
     
-    }
-    
-    `)
-    
+   
     return (
       <div className="Profile" >
 
        
-        {/* <Basic_profile /> */}
+        <Basic_profile />
         
 
-        <form id="form" style={{top: "800px"}}>
-          <input type="text" placeholder="name" ></input>
-          <input type="text" placeholder="Email"></input>
-          {TTest.id}
+        <form className="form"  >
+          <input type="text" placeholder="Nickname" ></input><br></br>
+          <input type="text" placeholder="Email"></input><br></br>
+          <input type="text" placeholder="PhoneNumber"></input><br></br>
+          
+          <button> Save Changes </button>
         </form>
         
       </div>

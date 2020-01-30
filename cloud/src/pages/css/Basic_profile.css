@@ -4,11 +4,11 @@
     bottom: 85px;
     left: 135px;
     height: 15%;
-    width: 15%;
+    width: auto;
 
 }
 .container {
-    position: relative;
+    position: sticky;
     left: 500px;
     width: 500px;
     height: 200px;
