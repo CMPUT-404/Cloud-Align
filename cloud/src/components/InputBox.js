@@ -10,16 +10,18 @@ const { TextArea } = Input;
 class InputBox extends React.Component{
     constructor(){
         super()
-        this.bind
+        this.submitPost = this.submitPost.bind(this)
     }
 
-    submitPost{}
+    submitPost(){
+        window.alert('Post has been submitted')
+    }
     
     render(){
         return(
             <div id="inputBox">
                 <TextArea rows={7} placeholder="What's on your mind..."/>
-                <button onClick={submitPost}>Submit</button>
+                <button onClick={this.submitPost}>Submit</button>
             </div>
         )
     }
