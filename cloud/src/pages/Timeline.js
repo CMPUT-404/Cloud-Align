@@ -6,12 +6,18 @@ import CardContent from '../components/CardContent';
 
 class Timeline extends React.Component {
   render(){
-    const PostCompnents = PostsData.map(item => <CardContent key={item.id} post = {item} />)
+
+    var postComponents = []
+    for(var i=0;i<PostsData[0].posts.length;i++){
+        var eachPost = <CardContent post={PostsData[0].posts[i]}/>
+        postComponents.push(eachPost)
+    }
+
   
     return (
       <div className="Timeline">
         <InputBox id="InputBox"/>
-        {PostCompnents}
+        {postComponents}
       </div>
     )
 

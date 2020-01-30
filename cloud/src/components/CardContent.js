@@ -11,8 +11,8 @@ class CardContent extends React.Component{
     render(){
         return(
             <div>
-                <Card title="Is title even needed" extra={<a href="#">Drop Down</a>}>
-                    <h1>{this.props.post.id}</h1>
+                
+                <Card title={this.props.post.title} extra={<a href="#">expand</a>}>
                     <h1>{this.props.post.content}</h1>
                 </Card>
         
