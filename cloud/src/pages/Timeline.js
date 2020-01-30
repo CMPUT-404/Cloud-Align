@@ -1,8 +1,8 @@
 import React from 'react';
 import './Timeline.css';
 import PostsData from '../PostsData'
-import InputBox from '../components/InputBox';
-import CardContent from '../components/CardContent';
+import InputBox from '../Components/InputBox';
+import CardContent from '../Components/CardContent';
 
 class Timeline extends React.Component {
   render(){

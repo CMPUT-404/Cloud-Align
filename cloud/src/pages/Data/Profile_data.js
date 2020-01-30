@@ -5,7 +5,7 @@
 var Profile_data = {
 
     name : "AinzOal",
-    nickname : "MyPico",
+    nickname : "froggo",
     email : "Death@note"
 
 

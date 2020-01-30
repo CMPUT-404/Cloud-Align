@@ -1,7 +1,7 @@
 
 #add_button{
     position: relative;
-    bottom: 85px;
+    bottom: 115px;
     left: 135px;
     height: 15%;
     width: auto;
@@ -21,6 +21,15 @@
     left: 60px;
     border-radius: 30%;
     width:100%;
+}
+
+#view_profile{
+    position: relative;
+    bottom: 115px;
+    left: 145px;
+    height: 15%;
+    width: auto;
+
 }
 
 

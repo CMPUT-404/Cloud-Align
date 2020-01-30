@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Friends from './pages/Friends';
-import Profile from './pages/Profile';
-import Timeline from './pages/Timeline'
-import NavBar from './components/NavBar'
+import Friends from './Pages/Friends';
+import Profile from './Pages/Profile';
+import Timeline from './Pages/Timeline'
+import NavBar from './Components/NavBar'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 
