@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import './CardContent.css';
 import { Card, Button } from 'antd';
 import { Route, Link } from 'react-router-dom'
-import FullPost from './FullPost'
+// import FullPost from './FullPost'
 
 class CardContent extends React.Component{
     constructor(){

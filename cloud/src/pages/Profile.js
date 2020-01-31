@@ -22,15 +22,6 @@ class Profile extends React.Component {
     
    
     return (
-<<<<<<< HEAD
-      
-      <div>
-        <div>
-        <img id="profile_pic" src={require('../Images/pepe.jpeg')} />
-        <h1>Name</h1>
-        <button id='add_button'>
-        {/* <img id="add_button_img" src={require('../images/add_button.jpeg')} /> */}
-=======
       <div className="Profile" >
 
        
@@ -47,7 +38,6 @@ class Profile extends React.Component {
         </form>
         <button>
         
->>>>>>> frontend-dev-joe
         </button>
         
       </div>
