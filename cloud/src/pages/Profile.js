@@ -1,10 +1,28 @@
 import React from 'react';
-import './css/Profile.css'
+
+import Basic_profile from './Models/Basic_profile'
+
+import Test from './Models/test'
+import './css/Profile.css' 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom"
+import data from './Data/Profile_data'
 
 
 class Profile extends React.Component {
-  render(){  
+  
+
+  
+
+  render(){ 
+    
+   
     return (
+<<<<<<< HEAD
       
       <div>
         <div>
@@ -12,10 +30,31 @@ class Profile extends React.Component {
         <h1>Name</h1>
         <button id='add_button'>
         {/* <img id="add_button_img" src={require('../images/add_button.jpeg')} /> */}
+=======
+      <div className="Profile" >
+
+       
+        <Basic_profile />
+        
+        
+        <form className="form"  >
+          <input type="text" placeholder="Nickname" ></input><br></br>
+          <input type="text" placeholder="Email"></input><br></br>
+          <input type="text" placeholder="PhoneNumber"></input><br></br>
+          
+          <button> Save Changes </button>
+
+        </form>
+        <button>
+        
+>>>>>>> frontend-dev-joe
         </button>
-        </div>
-        <h4>This page should display the user profile, including avator, posts from the user...</h4>
+        
       </div>
+      
+        
+     
+      
     )
 
   }
