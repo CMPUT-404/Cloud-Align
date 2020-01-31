@@ -13,6 +13,7 @@ class Timeline extends React.Component {
         <InputBox id="InputBox"/>
         {PostCompnents}
         
+        
       </div>
     )
 

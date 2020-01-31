@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/Basic_profile.css'
 import data from '../Data/Profile_data'
+
 class Basic_profile extends React.Component{
     constructor(){
         super()
