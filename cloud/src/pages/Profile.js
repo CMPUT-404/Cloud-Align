@@ -25,7 +25,6 @@ class Profile extends React.Component {
     // var request = new XMLHttpRequest()
     // request.open('GET','http://162.246.157.219:25565/users')
     // request.send()
-
     // var temp = null
     // request.onload = ()=>{
     //   temp = JSON.parse(request.response)
@@ -33,13 +32,9 @@ class Profile extends React.Component {
     // }
 
     //POST 
-
     // request.open('POST','http://162.246.157.219:25565/users/')
     // request.setRequestHeader("Authorization", "Basic " + btoa("admin:123456"));
     // request.setRequestHeader("Content-Type", "application/json")
-    
-
-
     // request.onreadystatechange = function () {
     //   alert(request.responseText)
     //   if (request.readyState === 4 && request.status === 200) {
@@ -47,8 +42,6 @@ class Profile extends React.Component {
     //       alert(JSON.stringify(json));
     //   }
     // };
-
-
     // request.send('{"username":"AtestCow","password":"123456"}')
 
       
