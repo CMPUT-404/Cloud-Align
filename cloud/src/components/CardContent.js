@@ -23,16 +23,14 @@ class CardContent extends React.Component{
     render(){
         return(
             <div>
-            
+
                 <Card title={this.props.post.title} extra={<Button type="link" onClick={this.expand}>hide</Button>}>
                     <h1 hidden={this.state.expand}>{this.props.post.content}</h1>
                 </Card>
-        
+
             </div>
         )
     }
 }
 
 export default CardContent
-
-
