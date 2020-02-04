@@ -10,7 +10,7 @@ import {
   Route,
   Link
 } from "react-router-dom"
-import data from './Data/Profile_data'
+
 
 
 class Profile extends React.Component {
@@ -22,7 +22,7 @@ class Profile extends React.Component {
     
 
     // GET
-    var request = new XMLHttpRequest()
+    // var request = new XMLHttpRequest()
     // request.open('GET','http://162.246.157.219:25565/users')
     // request.send()
 

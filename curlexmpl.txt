@@ -1,0 +1,28 @@
+curl -u admin --header "Content-Type: application/json" \
+  --request POST \
+  --data '{
+  "id": "http://127.0.0.1:5454/author/de305d54-75b4-431b-adb2-eb6b9e546013",
+  "username": "CatLara",
+  "email": "lara@lara.com",
+  "bio": "Hi, I am lara",
+  "host": "http://127.0.0.1:5454",
+  "firstName": "Lara",
+  "lastName": "Smith",
+  "displayName": "Greg Johnson",
+  "url": "http://127.0.0.1:5454/author/de305d54-75b4-431b-adb2-eb6b9e546013",
+  "github": "http://github.com/gjohnson",
+  "friends": [
+    {
+      "id": "http://127.0.0.1:5454/author/de305d54-75b4-431b-adb2-eb6b9e546013",
+      "email": "lara@lara.com",
+      "bio": "Hi, I am lara",
+      "host": "http://127.0.0.1:5454",
+      "firstName": "Lara",
+      "lastName": "Smith",
+      "displayName": "Greg Johnson",
+      "url": "http://127.0.0.1:5454/author/de305d54-75b4-431b-adb2-eb6b9e546013",
+      "github": "http://github.com/gjohnson"
+    }
+  ]
+}' \
+  http://162.246.157.219:25565/users/
