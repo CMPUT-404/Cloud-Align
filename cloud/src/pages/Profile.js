@@ -3,7 +3,7 @@ import React from 'react';
 import Basic_profile from './Models/Basic_profile'
 
 import Test from './Models/test'
-import './css/Profile.css' 
+import './css/Profile.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,9 +14,7 @@ import {
 
 
 class Profile extends React.Component {
-  
 
-  
 
   render(){ 
     
@@ -55,10 +53,10 @@ class Profile extends React.Component {
     return (
       <div className="Profile" >
 
-       
+
         <Basic_profile />
-        
-        
+
+
         <form className="form"  >
           <input type="text" placeholder="Nickname" ></input><br></br>
           <input type="text" placeholder="Email"></input><br></br>
@@ -68,14 +66,14 @@ class Profile extends React.Component {
 
         </form>
         <button>
-        
+
         </button>
-        
+
       </div>
-      
-        
-     
-      
+
+
+
+
     )
 
   }
