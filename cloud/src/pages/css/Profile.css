@@ -1,14 +1,38 @@
 .form{
     position: relative;
-    top: 200px;
+    top: 100px;
 }
 
 .form input{
+    border:1px solid ;
+    
+    outline:none;
+    padding: 5pt;
+    border-color: white;
+    width:538pt;
 
-    border-color: rgb(187, 255, 0);
-    width:700px;
+    font-size: 13pt;
+    color: grey;
+}
 
 
+.form button{
+   
+    
+    position: relative;
+    top: 3pt;
+    left: -550pt;
+    width: 100pt;
+    height: 30pt;
+    border-color: rgb(184, 179, 245);
+    background-color: rgb(179, 222, 245);
+
+    font-size: 13pt;
+    
+    
+   
+
+    
 }
 
 

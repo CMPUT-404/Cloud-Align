@@ -15,8 +15,57 @@ import {
 
 class Profile extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+    
+      userdata : 'http://162.246.157.219:25565/users/2/'
+    }
+  }
+
+  
+
+  save_change(tempdata){
+    
+
+  var data = {};
+  var email = document.getElementById("email").value;
+  var name = document.getElementById("name").value;
+  if (email != ''){data["email"] = email}
+  if (name!=''){data["username"] = name}
+ 
+  data = JSON.stringify(data);
+  
+
+  var putreq = new XMLHttpRequest(); 
+  putreq.open('PUT',tempdata.userdata,false);
+  
+  putreq.setRequestHeader('Authorization', "Basic " + btoa('admin:123456'));
+  putreq.setRequestHeader('Content-Type', 'application/json');
+  
+  putreq.onreadystatechange = function () {
+     
+      if (putreq.status != 200){
+        var json = JSON.parse(putreq.responseText);
+        alert(JSON.stringify(json));
+      }
+      
+    };
+
+ 
+
+  putreq.send(data);
+
+   
+   
+
+    
+  }
+
 
   render(){ 
+
+    
     
 
     // GET
@@ -44,38 +93,34 @@ class Profile extends React.Component {
 
       
 
-  
-
-
-
-
-
     return (
       <div className="Profile" >
 
 
         <Basic_profile />
 
-
-        <form className="form"  >
-          <input type="text" placeholder="Nickname" ></input><br></br>
-          <input type="text" placeholder="Email"></input><br></br>
+        
+        <form className="form"  onSubmit={ ()=>this.save_change(this.state)} id="changes">
+          <input type="text" id="name" placeholder="Name" ></input><br></br>
+          <input type="text" id="email" placeholder="Email"></input><br></br>
           <input type="text" placeholder="PhoneNumber"></input><br></br>
           
-          <button> temp.users </button>
+          <button type="submit"> 
+          Save changes
+          </button>
 
         </form>
-        <button>
-
-        </button>
+       
 
       </div>
 
+      
 
 
 
     )
 
   }
+
 }
 export default Profile
