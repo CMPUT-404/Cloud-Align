@@ -18,7 +18,6 @@ class Timeline extends React.Component {
   render(){
     var postComponents = []
     for(var i=0;i<PostsData[0].posts.length;i++){
-        
         var eachPost = <CardContent key={PostsData[0].posts[i].id} post={PostsData[0].posts[i]} index={i} onChangeCurrent={this.changeCurrent}/>
         postComponents.push(eachPost)
     }
