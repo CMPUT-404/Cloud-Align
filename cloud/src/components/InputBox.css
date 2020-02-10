@@ -8,3 +8,14 @@
 button{
     float: right;
 }
+
+#uploadButton{
+    display: flex;
+    float: right;
+}
+
+#submitButton{
+    display: flex;
+    justify-content: space-around;
+    float: right;
+}

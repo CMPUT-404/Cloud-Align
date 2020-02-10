@@ -23,4 +23,9 @@ h1{
   font-size: small;
   text-align: left;
 }
+
+#cardProfile{
+  height: 50px;
+  border-radius: 50%;
+}
   

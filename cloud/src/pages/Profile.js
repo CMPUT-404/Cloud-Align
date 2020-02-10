@@ -1,17 +1,6 @@
 import React from 'react';
-
-import Basic_profile from './Models/Basic_profile'
-
-import Test from './Models/test'
-import './css/Profile.css'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom"
-import data from './Data/Profile_data'
-
+import Basic_profile from './Models/Basic_profile';
+import './css/Profile.css';
 
 class Profile extends React.Component {
 
