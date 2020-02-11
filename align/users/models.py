@@ -17,5 +17,6 @@ class User(AbstractUser):
     github = models.URLField(blank=True)
 
 class ExtendAuthorModel(models.Model):
+    # change to reference host instead of id
     authorID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authorID')
     friendID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendID')

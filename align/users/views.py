@@ -50,7 +50,7 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
             if (not (friendID and authorID)):
                 raise
             validated_data = {"authorID": authorID, "friendID": friendID}
-            FriendRequestViewSet.serializer_class.create(validated_data)
+            #FriendRequestViewSet.serializer_class.create(validated_data)
             response = HttpResponse('''{
                                     "query": "friendrequest",
                                     "success": true,
