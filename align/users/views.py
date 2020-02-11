@@ -79,7 +79,6 @@ class IsFriendViewSet(viewsets.ModelViewSet):
     def friendsList(self, request, pk=None):
         # get friend list of author
         
-        
         friends = IsFriendViewSet.serializer_class.friends(pk)
         response = HttpResponse('''{{
                                     "query": "friends",
