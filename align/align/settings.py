@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     #
     'rest_framework',
     'corsheaders',
+    'django.contrib.sites',  # FIXME not used
     #
+    'users.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +99,9 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+
+# My custom user model/
+AUTH_USER_MODEL = 'users.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
