@@ -42,9 +42,9 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     
     def create(self, request):
         # make friend request
-        body = request.body
-        requestJson = json.loads(body)
         try:
+            body = request.body
+            requestJson = json.loads(body)
             authorID = requestJson["author"]["id"]
             friendID = requestJson["friend"]["id"]
             if (not (friendID and authorID)):
