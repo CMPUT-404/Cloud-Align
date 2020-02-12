@@ -34,22 +34,27 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
          
         json = '"'
         for result in results:
-            if (ExtendAuthorModel.objects.filter(authorID=result.friendID, friendID=pk)):
-                json += result.friendId + '",\n'
+            if (ExtendAuthorModel.objects.filter(authorID=result.friendID, friendID=pk).exists()):
+                hostname = User.objects.values_list('host').filter(id=result.friendID)
+                json += hostname + '",\n'
             
         if (json == '"'):
             return ''
         return json[:-2] + '\n'
     
     @classmethod
-    def listFriends(cls, authorID, authorList, pk):
+    def listFriends(cls, authorID, authorHostList, pk):
         # find friend with list
-        if (not len(authorList)):
+        if (not len(authorHostList)):
             return ''
         results = ExtendAuthorModel.objects.values_list('friendID').filter(authorID=pk)
+        hosts = []
+        for result in results:
+            hosts.append(User.objects.values_list('host').filter(id=result.friendID).first())
+            
         json = '"'
-        for friend in authorList:
-            if (friend in results):
+        for friend in authorHostList:
+            if (friend in hosts):
                 json += friend + '",\n'
                 
         if (json == '"'):

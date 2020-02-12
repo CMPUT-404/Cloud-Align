@@ -50,7 +50,7 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
             if (not (friendID and authorID)):
                 raise
             validated_data = {"authorID": authorID, "friendID": friendID}
-            #FriendRequestViewSet.serializer_class.create(validated_data)
+            FriendRequestViewSet.serializer_class.create(validated_data)
             response = HttpResponse('''{
                                     "query": "friendrequest",
                                     "success": true,
@@ -105,12 +105,12 @@ class IsFriendViewSet(viewsets.ModelViewSet):
     
             return response
         
-        body = request.body
-        requestJson = json.loads(body)
         try:
+            body = request.body
+            requestJson = json.loads(body)
             authorID = requestJson["author"]
-            authorList = requestJson["authors"]     
-            friends = IsFriendViewSet.serializer_class.listFriends(authorID, authorList, pk)
+            authorHostList = requestJson["authors"]     
+            friends = IsFriendViewSet.serializer_class.listFriends(authorID, authorHostList, pk)
         except:
             friends = ''
         
@@ -129,7 +129,10 @@ class IsFriendViewSet(viewsets.ModelViewSet):
         # ask if 2 authors are friends
         #uuid
         
-        if ((ExtendAuthorModel.objects.filter(authorID=pk, friendID=sk)) and (ExtendAuthorModel.objects.filter(authorID=sk, friendID=pk))):
+        pkhost = User.objects.filter(id=pk).first().host;
+        skhost = User.objects.filter(id=sk).first().host;
+        
+        if ((ExtendAuthorModel.objects.filter(authorID=pk, friendID=sk).exist()) and (ExtendAuthorModel.objects.filter(authorID=sk, friendID=pk).exist())):
             # the relationship goes both ways, they are firends
             response = HttpResponse('''{{
                                     "query": "friends",
@@ -138,7 +141,7 @@ class IsFriendViewSet(viewsets.ModelViewSet):
                                             "{}",
                                             "{}"
                                     ]
-                                    }}'''.format(pk,sk))
+                                    }}'''.format(pkhost,skhost))
         else:
             response = HttpResponse('''{{
                                     "query": "friends",
@@ -147,7 +150,7 @@ class IsFriendViewSet(viewsets.ModelViewSet):
                                             "{}",
                                             "{}"
                                     ]
-                                    }}'''.format(pk,sk))
+                                    }}'''.format(pkhost,skhost))
     
         return response
     
