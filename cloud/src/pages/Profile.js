@@ -2,6 +2,7 @@ import React from 'react';
 import Basic_profile from './Models/Basic_profile';
 import './css/Profile.css';
 
+
 class Profile extends React.Component {
 
   constructor(props){
