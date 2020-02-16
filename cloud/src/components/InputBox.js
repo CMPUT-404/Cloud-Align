@@ -10,12 +10,23 @@ const { TextArea } = Input;
 class InputBox extends React.Component{
     constructor(){
         super()
+        this.submitPost = this.submitPost.bind(this)
+    }
+
+    submitPost(){
+        window.alert('Post has been submitted')
+    }
+
+    pictureHandler = event => {
+        console.log(event)
     }
     
     render(){
         return(
             <div id="inputBox">
-                <TextArea rows={7} />
+                <TextArea rows={7} placeholder="What's on your mind..."/>
+                <button id="submitButton" onClick={this.submitPost}>Submit</button>
+                <input id="uploadButton" type="file" alt="image uploaded by user" onChange={this.pictureHandler}/>
             </div>
         )
     }

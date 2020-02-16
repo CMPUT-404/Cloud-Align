@@ -1,0 +1,1 @@
+curl -X PUT -u admin -d username=pie http://162.246.157.219:25565/users/2/

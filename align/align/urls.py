@@ -24,8 +24,13 @@ from comments import views as comments_views
 router = routers.DefaultRouter()
 router.register(r'users', user_views.UserViewSet)
 router.register(r'groups', user_views.GroupViewSet)
+
 router.register(r'posts', posts_views.PostsViewSet)
 router.register(r'comments', comments_views.CommentsViewSet)
+
+router.register(r'friendrequest', user_views.FriendRequestViewSet)
+router.register(r'author', user_views.IsFriendViewSet, basename="author")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
