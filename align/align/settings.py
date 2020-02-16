@@ -45,11 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     #
     'rest_framework',
     'corsheaders',
     'django.contrib.sites',  # FIXME not used
     #
+    'posts.apps.PostsConfig',
+    'comments.apps.CommentsConfig',
     'users.apps.UserConfig',
 ]
 
