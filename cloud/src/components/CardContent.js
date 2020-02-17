@@ -60,9 +60,9 @@ class CardContent extends React.Component{
             <div>
                 <Card title={this.props.post.title} 
                   extra={ <Link to={'/Timeline/' + this.props.post.id} >see more</Link> }>
-                    <Link to={'/Profile/'+this.props.post.author.id}>{this.props.post.author.firstName + " " + this.props.post.author.lastName}</Link>
-                    <Link to={'/Profile/'+this.props.post.author.id}><img id="cardProfile" align="left" src={require('../Images/pepe.jpeg')} /></Link>
-                    <p>{this.props.post.content}</p>
+                    <Link to={'/Profile/'+this.props.post.author}>{this.props.post.author}</Link>
+                    <Link to={'/Profile/'+this.props.post.author}><img id="cardProfile" align="left" src={require('../Images/pepe.jpeg')} /></Link>
+                    <p>{this.props.post.plainText}</p>
                     <button onClick={this.addComment}>Add Comment</button>
                     <Modal
                         title={this.props.post.title}
