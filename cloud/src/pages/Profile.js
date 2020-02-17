@@ -1,6 +1,7 @@
 import React from 'react';
 import Basic_profile from './Models/Basic_profile';
 import './css/Profile.css';
+import CardContent from '../Components/CardContent';
 
 
 
@@ -17,7 +18,8 @@ class Profile extends React.Component {
     this.state = {
       Props: props,
       userdata : 'http://162.246.157.219:25565/users/fc89aa45-ce71-43fa-b111-84e1ddecb704/',
-      path: "/Timeline"
+      path: "/Timeline",
+      postComponents : []
     }
   }
 
@@ -65,6 +67,19 @@ class Profile extends React.Component {
 
 
   render(){ 
+
+    let request = new XMLHttpRequest()
+    request.open('GET', 'http://162.246.157.219:25565/posts/')
+    request.send()
+    request.onload = () => {
+      let posts = JSON.parse(request.response)
+      var tempPostList = [] 
+      for(let i=0;i<posts.length;i++){
+        var eachPost = <CardContent post={posts[i]} />
+        tempPostList.push(eachPost)
+      }
+      this.setState({postComponents: tempPostList})
+    }
 
     
       
@@ -116,8 +131,12 @@ class Profile extends React.Component {
             <button type="submit"> 
             Save changes
             </button>
+            
 
           </form>
+          <div id="posts">
+            {this.state.postComponents}
+          </div>
           
 
         </div>
