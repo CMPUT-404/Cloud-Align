@@ -3,6 +3,9 @@ import Basic_profile from './Models/Basic_profile';
 import './css/Profile.css';
 
 
+
+
+
 // import {Route,Link,BrowserRouter as Router} from 'react-router-dom';
 
 
@@ -13,7 +16,7 @@ class Profile extends React.Component {
     super(props)
     this.state = {
       Props: props,
-      userdata : 'http://162.246.157.219:25565/users/2/',
+      userdata : 'http://162.246.157.219:25565/users/fc89aa45-ce71-43fa-b111-84e1ddecb704/',
       path: "/Timeline"
     }
   }
@@ -98,7 +101,7 @@ class Profile extends React.Component {
 
         
         <div id="B">
-        <Basic_profile tag="moo"/>
+        <Basic_profile url={this.state.userdata}/>
         </div>
           
         
@@ -118,6 +121,12 @@ class Profile extends React.Component {
           
 
         </div>
+
+        
+        
+
+       
+        
         
        
        
