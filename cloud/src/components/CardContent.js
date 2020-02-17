@@ -3,28 +3,27 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import './CardContent.css';
 import { Card, Button } from 'antd';
-import FullPost from '../Pages/FullPost';
 import { Modal} from 'antd';
 import { Input } from 'antd';
+import  { Link } from 'react-router-dom'
+
 
 const { TextArea } = Input;
 class CardContent extends React.Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             ModalText: "display a list of comments",
             visible: false,
             confirmLoading: false,
+            path: '/Timeline/' + props.post.id
           };
-    }
-    seeFullPost(){
-        //Route to full post  
-        return <FullPost />
     }
 
     displayProfile(){
         //Route to profile 
         window.alert("Going to user's profile")
+        return <Link to={'/Profile'} >see more</Link>
     }
 
 
@@ -59,9 +58,10 @@ class CardContent extends React.Component{
         const { visible, confirmLoading, ModalText } = this.state;
         return(
             <div>
-                <Card title={this.props.post.title} extra={<Button type="link" onClick={this.seeFullPost}>see more</Button>}>
-                    <h1>{this.props.post.author.firstName + " " + this.props.post.author.lastName}</h1>
-                    <img id="cardProfile" onClick={this.displayProfile} align="left" src={require('../Images/pepe.jpeg')} />
+                <Card title={this.props.post.title} 
+                  extra={ <Link to={'/Timeline/' + this.props.post.id} >see more</Link> }>
+                    <Link to={'/Profile/'+this.props.post.author.id}>{this.props.post.author.firstName + " " + this.props.post.author.lastName}</Link>
+                    <Link to={'/Profile/'+this.props.post.author.id}><img id="cardProfile" align="left" src={require('../Images/pepe.jpeg')} /></Link>
                     <p>{this.props.post.content}</p>
                     <button onClick={this.addComment}>Add Comment</button>
                     <Modal
