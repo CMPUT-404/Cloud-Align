@@ -2,14 +2,14 @@
 
 #profiletext{
     position: relative;
-    right: 50pt;
+    /* right: 50pt; */
     font-size: 16pt;
     color: rgb(121, 49, 142);
 }
 .smallimg { 
     position: relative;
     top: 100pt;
-    right: 100pt;
+    
 
 }
 #edit_button{
@@ -21,9 +21,11 @@
 }
 .container {
     position: sticky;
-    left: 500pt;
+    left: 50pt;
     width: 500pt;
     height: 200pt;
+    width:50%;
+
 
    
 }
@@ -31,16 +33,15 @@
 
 .container img#profile_pic{
     position:relative;
-    left: 60pt;
     border-radius: 100%;
-    width:80%;
+    
 }
 
 #view_profile{
     position: relative;
    
     
-    height: 15%;
+    height: 10%;
     width: auto;
 
 }

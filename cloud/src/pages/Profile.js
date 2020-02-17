@@ -3,21 +3,29 @@ import Basic_profile from './Models/Basic_profile';
 import './css/Profile.css';
 
 
+// import {Route,Link,BrowserRouter as Router} from 'react-router-dom';
+
+
+
 class Profile extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
-    
-      userdata : 'http://162.246.157.219:25565/users/2/'
+      Props: props,
+      userdata : 'http://162.246.157.219:25565/users/2/',
+      path: "/Timeline"
     }
   }
 
-  
+
 
   save_change(tempdata){
-    
 
+
+  
+
+  
   var data = {};
   var email = document.getElementById("email").value;
   var name = document.getElementById("name").value;
@@ -56,6 +64,7 @@ class Profile extends React.Component {
   render(){ 
 
     
+      
     
 
     // GET
@@ -84,28 +93,36 @@ class Profile extends React.Component {
       
 
     return (
+      
       <div className="Profile" >
 
-
-        <Basic_profile />
-
         
-        <form className="form"  onSubmit={ ()=>this.save_change(this.state)} id="changes">
-          <input type="text" id="name" placeholder="Name" ></input><br></br>
-          <input type="text" id="email" placeholder="Email"></input><br></br>
-          <input type="text" placeholder="PhoneNumber"></input><br></br>
+        <div id="B">
+        <Basic_profile tag="moo"/>
+        </div>
           
-          <button type="submit"> 
-          Save changes
-          </button>
+        
+        
 
-        </form>
+        <div id="form">
+          <form className="form"  onSubmit={ ()=>this.save_change(this.state)} id="changes">
+            <input type="text" id="name" placeholder="Name" ></input><br></br>
+            <input type="text" id="email" placeholder="Email"></input><br></br>
+            <input type="text" placeholder="PhoneNumber"></input><br></br>
+            
+            <button type="submit"> 
+            Save changes
+            </button>
+
+          </form>
+          
+
+        </div>
+        
        
-
+       
+    
       </div>
-
-      
-
 
 
     )
