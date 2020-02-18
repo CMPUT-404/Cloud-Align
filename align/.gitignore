@@ -3,4 +3,3 @@ venv
 db.sqlite3
 .DS_Store
 *.pyc
-users/migrations/*

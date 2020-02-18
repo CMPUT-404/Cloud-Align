@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'comments.apps.CommentsConfig',
     'users.apps.UserConfig',
-]
+    'friends.apps.FriendsConfig',]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
