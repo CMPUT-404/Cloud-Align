@@ -111,12 +111,13 @@ class IsFriendViewSet(viewsets.ModelViewSet):
             skhost = User.objects.filter(id=sk).first().host;
             pkhost = pkhost if (pkhost[-1] != '/') else (pkhost[:-1])
             skhost = skhost if (skhost[-1] != '/') else (skhost[:-1])
-            pkhost = pkhost + '/author/' + pk
-            skhost = skhost + '/author/' + sk
+            pkhost = 'http://' + pkhost + '/author/' + pk
+            skhost = 'http://' + skhost + '/author/' + sk
+            responseDictionary["authors"] = [pkhost, skhost]
             if ((ExtendAuthorModel.objects.filter(authorID=pk, friendID=sk).exists()) and (ExtendAuthorModel.objects.filter(authorID=sk, friendID=pk).exists())):
                 # the relationship goes both ways, they are firends
                 responseDictionary["friends"] = True
-                response = HttpResponse(json.dumps(responseDictionary))
+            response = HttpResponse(json.dumps(responseDictionary))
         except:
                 pass
     

@@ -41,7 +41,7 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
             if (ExtendAuthorModel.objects.filter(authorID=result.friendID.id, friendID=ID).exists()):
                 userData = User.objects.filter(id=result.friendID.id).first()
                 friendhost = userData.host if (userData.host[-1] != '/') else (userData.host[:-1])
-                friends.append(friendhost + '/author/' + str(userData.id))
+                friends.append('http://' + friendhost + '/author/' + str(userData.id))
                 
         return friends
     
