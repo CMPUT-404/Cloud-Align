@@ -6,48 +6,63 @@ User = get_user_model()
 
 class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
     
-    def create(self, validated_data):
-        #TODO: validate ids
-        extAuth = ExtendAuthorModel(authorID=validated_data["authorID"], friendID=validated_data["friendID"])
-        extAuth.save()
-        return extAuth
-    
     @classmethod
-    def friends(cls, pk):
-        # finds author's friends
-        
-        results = ExtendAuthorModel.objects.filter(authorID=pk)
-         
-        json = '"'
-        for result in results:
-            if (ExtendAuthorModel.objects.filter(authorID=result.friendID, friendID=pk).exists()):
-                hostname = User.objects.values_list('host').filter(id=result.friendID)
-                json += hostname + '",\n'
-            
-        if (json == '"'):
-            return ''
-        return json[:-2] + '\n'
-    
-    @classmethod
-    def listFriends(cls, authorID, authorHostList, pk):
-        # find friend with list
-        if (not len(authorHostList)):
-            return ''
-        results = ExtendAuthorModel.objects.values_list('friendID').filter(authorID=pk)
-        hosts = []
-        for result in results:
-            hosts.append(User.objects.values_list('host').filter(id=result.friendID).first())
-            
-        json = '"'
-        for friend in authorHostList:
-            if (friend in hosts):
-                json += friend + '",\n'
+    def create(cls, validated_data):
+        #TODO: combine if statments
                 
-        if (json == '"'):
-            return ''
-        return json[:-2] + '\n'
+        author = validated_data["authorID"]
+        friend = validated_data["friendID"]
         
+        if (ExtendAuthorModel.objects.filter(authorID=author, friendID=friend).exists()):
+            # this relation already exists in the db
+            raise      
         
+        if ((User.objects.filter(id=author).exists()) and (User.objects.filter(id=author).exists())):
+            # verify users (author + friend) exists
+            authorUser = User.objects.get(id=author)
+            friendUser = User.objects.get(id=friend)
+            extAuth = ExtendAuthorModel(authorID=authorUser, friendID=friendUser)
+            extAuth.save()
+            return extAuth
+        
+        # users didn't exist
+        raise
+    
+    @classmethod
+    def friends(cls, ID):
+        # ID is author's ID
+        # finds author's friends
+        # returns a list of friends of authorid=pk as a list containing the friends url
+        
+        results = ExtendAuthorModel.objects.filter(authorID=ID)
+        friends = []
+
+        for result in results:
+            if (ExtendAuthorModel.objects.filter(authorID=result.friendID.id, friendID=ID).exists()):
+                userData = User.objects.filter(id=result.friendID.id).first()
+                friendhost = userData.host if (userData.host[-1] != '/') else (userData.host[:-1])
+                friends.append(friendhost + '/author/' + str(userData.id))
+                
+        return friends
+    
+    @classmethod
+    def listFriends(cls, authorID, authorHostList):
+        # ID is author's ID
+        # find friend with list
+        # returns a list of friend hostnames that were in the list
+                
+        if (not len(authorHostList)):
+            return []
+        
+        friends = set()
+        
+        authorIDfriends = ExtendAuthorModelSerializer.friends(authorID) # ID's entire friend's list
+        # check if any in list is in authors friend's list
+        for potentialFriend in authorHostList:
+            if (potentialFriend in authorIDfriends):
+                friends.add(potentialFriend)
+            
+        return list(friends)
     
     class Meta:
         model = ExtendAuthorModel
