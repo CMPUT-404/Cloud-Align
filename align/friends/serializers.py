@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from users.models import ExtendAuthorModel
+from friends.models import ExtendAuthorModel
 from rest_framework import serializers
 
 User = get_user_model()
