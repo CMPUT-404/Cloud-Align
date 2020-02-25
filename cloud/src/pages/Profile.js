@@ -43,7 +43,7 @@ class Profile extends React.Component {
   var putreq = new XMLHttpRequest(); 
   putreq.open('PUT',tempdata.userdata,false);
   
-  putreq.setRequestHeader('Authorization', "Basic " + btoa('admin:123456'));
+  putreq.setRequestHeader('Authorization', "Basic " + btoa('joe:123456'));
   putreq.setRequestHeader('Content-Type', 'application/json');
   
   putreq.onreadystatechange = function () {
