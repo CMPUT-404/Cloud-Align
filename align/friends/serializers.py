@@ -15,7 +15,7 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
         
         if (ExtendAuthorModel.objects.filter(authorID=author, friendID=friend).exists()):
             # this relation already exists in the db
-            raise      
+            raise RuntimeError
         
         if ((User.objects.filter(id=author).exists()) and (User.objects.filter(id=author).exists())):
             # verify users (author + friend) exists
@@ -26,7 +26,7 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
             return extAuth
         
         # users didn't exist
-        raise
+        raise RuntimeError
     
     @classmethod
     def friends(cls, ID):
