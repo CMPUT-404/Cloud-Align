@@ -1,0 +1,34 @@
+h2, h3{
+    text-align: center;
+}
+
+Label{
+    text-align: center;
+}
+
+
+#emailInput, #passwordInput, #emailLabel, #passwordLabel{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+
+#submitButton{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    border-radius: 12pt;
+    width: 150pt;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+}
+
+#submitButton:hover{
+    background-color:  rgb(152, 255, 255);
+}
