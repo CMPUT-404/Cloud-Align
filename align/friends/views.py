@@ -26,18 +26,21 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
         # make friend request
         responseDictionary = {"query":"friendrequest", "success": True, "message":"Friend request sent"}
         try:
-            requestJson = request.data
 
+            body = request.body
+            #requestJson = json.loads(body)
+            #authorID = requestJson["author"]["id"].split('/')[-1]
+            #friendID = requestJson["friend"]["id"].split('/')[-1]
+            requestJson = request.data
             authorID = requestJson["authorID"].split("/")[-2]
             friendID = requestJson["friendID"].split("/")[-2]
             if (not (friendID and authorID)):
-                raise
+                raise RuntimeError
             validated_data = {"authorID": authorID, "friendID": friendID}
             FriendRequestViewSet.serializer_class.create(validated_data)
             response = HttpResponse(json.dumps(responseDictionary))
 
         except:
-            raise
             responseDictionary["success"] = False
             responseDictionary["message"] = "Friend request not sent"
             response = HttpResponse(json.dumps(responseDictionary))
@@ -84,12 +87,11 @@ class IsFriendViewSet(viewsets.ModelViewSet):
             authorID2 = ''.join(authorID.split('-'))
             if (ID2 != authorID2):
                 # bad request
-                raise
-            authorHostList = requestJson["authors"]
+                raise RuntimeError
+            authorHostList = requestJson["authors"]     
             friends = IsFriendViewSet.serializer_class.listFriends(authorID, authorHostList)
             responseDictionary["authors"] = friends
         except:
-            raise
             pass
 
         response = HttpResponse(json.dumps(responseDictionary))
