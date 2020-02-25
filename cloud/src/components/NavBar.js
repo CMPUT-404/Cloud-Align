@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import './NavBar.css';
 import {Link} from 'react-router-dom'
-import {Nav, Navbar, NavDropdown, MenuItem} from 'react-bootstrap'
+import {NavDropdown} from 'react-bootstrap'
 
 function NavBar(){
 
