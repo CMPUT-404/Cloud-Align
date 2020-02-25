@@ -18,14 +18,15 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     """
     API endpoint that makes a friend request.
     """
-    
+
     queryset = ExtendAuthorModel.objects.all()
     serializer_class = ExtendAuthorModelSerializer
-    
+
     def create(self, request):
         # make friend request
         responseDictionary = {"query":"friendrequest", "success": True, "message":"Friend request sent"}
         try:
+
             body = request.body
             #requestJson = json.loads(body)
             #authorID = requestJson["author"]["id"].split('/')[-1]
@@ -33,37 +34,36 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
             requestJson = request.data
             authorID = requestJson["authorID"].split("/")[-2]
             friendID = requestJson["friendID"].split("/")[-2]
-
             if (not (friendID and authorID)):
                 raise RuntimeError
             validated_data = {"authorID": authorID, "friendID": friendID}
             FriendRequestViewSet.serializer_class.create(validated_data)
             response = HttpResponse(json.dumps(responseDictionary))
-        
+
         except:
             responseDictionary["success"] = False
             responseDictionary["message"] = "Friend request not sent"
             response = HttpResponse(json.dumps(responseDictionary))
-    
+
         return response
-    
-    
+
+
 class IsFriendViewSet(viewsets.ModelViewSet):
     """
     API endpoint that asks a service if anyone in the list is a friend.
     """
     # TODO: fix hardcoding
-    
+
     queryset = ExtendAuthorModel.objects.all()
     serializer_class = ExtendAuthorModelSerializer
-    
+
     @action(methods=['post', 'get'], detail=True, url_path='friends', url_name='friendInList')
     def friendInList(self, request, pk=None):
         # ask if anyone in the list is a friend
         # URL: ​/author​/{author_id}​/friends
-        
+
         ID = request.path.split('/')[2]
-        
+
         if (request.method == "GET"):
             # get friend list of author
             # URL: /author/{author_id}/friends
@@ -75,15 +75,15 @@ class IsFriendViewSet(viewsets.ModelViewSet):
             except:
                 response = HttpResponse(json.dumps(responseDictionary))
             return response
-        
+
         # request is a post
         responseDictionary = {"query":"friends", "author": ID, "authors": []}
-        
+
         try:
             body = request.body
             requestJson = json.loads(body)
             authorID = requestJson["author"]
-            ID2 = ''.join(ID.split('-')) 
+            ID2 = ''.join(ID.split('-'))
             authorID2 = ''.join(authorID.split('-'))
             if (ID2 != authorID2):
                 # bad request
@@ -93,21 +93,21 @@ class IsFriendViewSet(viewsets.ModelViewSet):
             responseDictionary["authors"] = friends
         except:
             pass
-        
+
         response = HttpResponse(json.dumps(responseDictionary))
-    
+
         return response
-    
+
     @action(methods=['get'], detail=True, url_path='friends/(?P<sk>[^/.]+)', url_name='arefriends')
     def arefriends(self, request, pk=None, sk=None):
         # ask if 2 authors are friends
         # URL: /author/{author1_id}/friends/{author2_id}
-                
+
         pk = request.path.split('/')[2]
         sk = request.path.split('/')[4]
         responseDictionary = {"query":"friends", "friends": False, "authors": [pk,sk]}
         response = HttpResponse(json.dumps(responseDictionary))
-        
+
         try:
             pkhost = User.objects.filter(id=pk).first().host;
             skhost = User.objects.filter(id=sk).first().host;
@@ -122,11 +122,5 @@ class IsFriendViewSet(viewsets.ModelViewSet):
             response = HttpResponse(json.dumps(responseDictionary))
         except:
                 pass
-    
+
         return response
-    
-    
-    
-    
-    
-    
