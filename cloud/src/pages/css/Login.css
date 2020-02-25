@@ -3,7 +3,9 @@ h2, h3{
 }
 
 Label{
+    display: block;
     text-align: center;
+    line-height: 150%;
 }
 
 
@@ -15,20 +17,22 @@ Label{
 }
 
 
-#submitButton{
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-    border-radius: 12pt;
-    width: 150pt;
-    margin: auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 40px;
+#submitButton, #registerButton{
+    margin-top: 15px;
+    margin-left: 230pt;
+    border-color: rgb(152, 255, 255);    
+    border-radius: 15%;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    float: left;
+    font-size: 16px;
+    cursor: pointer;
+    width:20%;
+    text-align:center;
+    
 }
 
-#submitButton:hover{
+#submitButton:hover, #registerButton:hover{
     background-color:  rgb(152, 255, 255);
 }
