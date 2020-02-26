@@ -32,9 +32,11 @@ router.register(r'comments', comments_views.CommentsViewSet)
 router.register(r'friendrequest', friends_views.FriendRequestViewSet)
 router.register(r'author', friends_views.IsFriendViewSet, basename="author")
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^users/login$', user_views.LoginView.as_view()),
+    url(r'^users/register$', user_views.RegisterView.as_view()),
+
 ]
