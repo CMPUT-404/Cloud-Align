@@ -41,7 +41,9 @@ Fix the bug that make me can post friend request now.
   `npm i react-bootstrap --save`
   </br>
 
-  ####update notes 2020. 02.26
+---
+
+#### update notes 2020. 02.26
 
   `Cloud-Align/cloud/src/App.js`
 
@@ -61,7 +63,7 @@ Fix the bug that make me can post friend request now.
 
   add dummy data, 
 
-  ##### todo
+  ##### TODO
 
   * now waiting backend api to fetch friend list.
 
