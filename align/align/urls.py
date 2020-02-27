@@ -31,6 +31,7 @@ router.register(r'comments', comments_views.CommentsViewSet)
 
 router.register(r'friendrequest', friends_views.FriendRequestViewSet)
 router.register(r'author', friends_views.IsFriendViewSet, basename="author")
+router.register(r'friendrequestprocess', friends_views.FriendViewSet, basename="friendrequestprocess")
 
 
 urlpatterns = [
