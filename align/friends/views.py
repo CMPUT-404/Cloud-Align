@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 # Create your views here.
 from django.contrib.auth import get_user_model
@@ -65,7 +65,7 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     
 class FriendViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that processes friends requests accept/decline
+    API endpoint that processes accepting/declining friends requests
     """
 
     queryset = Friends.objects.all()
@@ -73,42 +73,88 @@ class FriendViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         # accept/decline friend request
-        responseDictionary = {"query":"friendrequestprocess", "success": True}
         
-        try:
+        if (request.path == '/friendrequestprocess/'):
+            # POST /friendrequest process
+            responseDictionary = {"query":"friendrequestprocess", "success": True}
+            
             try:
-                # swagger
-                body = request.body
-                requestJson = json.loads(body)
-                authorID = requestJson["author"].split('/')[-1]             # person accepting/declining
-                friendID = requestJson["friend"].split('/')[-1]             # person who sent request
-                friendStatus = requestJson["status"]
-                if (authorID == ''):
-                    requestJson["author"].split('/')[-2]
-                if (friendID == ''):
-                    requestJson["friend"].split('/')[-2]
+                try:
+                    # swagger
+                    body = request.body
+                    requestJson = json.loads(body)
+                    authorID = requestJson["author"].split('/')[-1]             # person accepting/declining
+                    friendID = requestJson["friend"].split('/')[-1]             # person who sent request
+                    friendStatus = requestJson["status"]
+                    if (authorID == ''):
+                        requestJson["author"].split('/')[-2]
+                    if (friendID == ''):
+                        requestJson["friend"].split('/')[-2]
+                except:
+                    # html form
+                    requestJson = request.data
+                    authorID = requestJson["author"].split("/")[-2]
+                    friendID = requestJson["friend"].split("/")[-2]
+                    friendStatus = "accept"
+    
+                if (not (friendID and authorID)):
+                    raise ValueError("No friendID or authorID was given")
+                validated_data = {"author": authorID, "friend": friendID}
+                FriendRequestViewSet.serializer_class.delete(validated_data)    # delete friends request
+                if (friendStatus == "accept"):
+                    # create friend
+                    FollowersViewSet.serializer_class.delete(validated_data)        # delete following relation
+                    validated_data = {"author": friendID, "friend": authorID}
+                    FriendRequestViewSet.serializer_class.delete(validated_data, supress=True)   # delete reverse friend request
+                    validated_data = {"author": friendID, "friend": authorID}
+                    FollowersViewSet.serializer_class.delete(validated_data, supress=True)       # delete reverse follower
+                    FriendViewSet.serializer_class.create(validated_data)           # create friend
+                response = HttpResponse(json.dumps(responseDictionary))
+    
             except:
-                # html form
-                requestJson = request.data
-                authorID = requestJson["author"].split("/")[-2]
-                friendID = requestJson["friend"].split("/")[-2]
-                friendStatus = "accept"
-
-            if (not (friendID and authorID)):
-                raise ValueError("No friendID or authorID was given")
-            validated_data = {"author": authorID, "friend": friendID}
-            FriendRequestViewSet.serializer_class.delete(validated_data)    # delete friends request
-            if (friendStatus == "accept"):
-                # create friend
-                FollowersViewSet.serializer_class.create(validated_data)
-                FriendViewSet.serializer_class.create(validated_data)       # create friend
-            response = HttpResponse(json.dumps(responseDictionary))
-
-        except:
-            responseDictionary["success"] = False
-            response = HttpResponse(json.dumps(responseDictionary))
-
-        return response
+                responseDictionary["success"] = False
+                response = HttpResponse(json.dumps(responseDictionary))
+    
+            return response
+        
+        elif (request.path == '/frienddelete/'):
+            # POST /frienddelete
+            responseDictionary = {"query":"frienddelete", "success": True}
+            
+            try:
+                try:
+                    # swagger
+                    body = request.body
+                    requestJson = json.loads(body)
+                    authorID = requestJson["author"].split('/')[-1]             # person requesting deletion
+                    friendID = requestJson["friends"].split('/')[-1]            # friend getting deleted
+                    if (authorID == ''):
+                        requestJson["author"].split('/')[-2]
+                    if (friendID == ''):
+                        requestJson["friend"].split('/')[-2]
+                except:
+                    # html form
+                    requestJson = request.data
+                    authorID = requestJson["author"].split("/")[-2]
+                    friendID = requestJson["friend"].split("/")[-2]
+    
+                if (not (friendID and authorID)):
+                    raise ValueError("No friendID or authorID was given")
+                validated_data = {"author": authorID, "friend": friendID}
+                FriendViewSet.serializer_class.delete(validated_data)       # delete friend relation
+                validated_data = {"author": friendID, "friend": authorID}
+                FollowersViewSet.serializer_class.create(validated_data)    # create one way follower
+                response = HttpResponse(json.dumps(responseDictionary))
+    
+            except:
+                responseDictionary["success"] = False
+                response = HttpResponse(json.dumps(responseDictionary))
+    
+            return response
+        
+        else:
+            return HttpResponse(Http404("Page does not exist"))
+            
 
 class IsFriendViewSet(viewsets.ModelViewSet):
     """
@@ -124,76 +170,58 @@ class IsFriendViewSet(viewsets.ModelViewSet):
         # ask if anyone in the list is a friend
         # URL: ​/author​/{author_id}​/friends
 
-        ID = request.path.split('/')[2]
+        #ID = request.path.split('/')[2]
+        #ID = pk
 
-        if (request.method == "GET"):
-            # get friend list of author
-            # URL: /author/{author_id}/friends
-            responseDictionary = {"query":"friends", "authors": []}
-            try:
-                friends = IsFriendViewSet.serializer_class.friends(ID)
-                responseDictionary["authors"] = friends
-                response = HttpResponse(json.dumps(responseDictionary))
-            except:
-                response = HttpResponse(json.dumps(responseDictionary))
-            return response
-
-        # request is a post
-        responseDictionary = {"query":"friends", "author": ID, "authors": []}
-
-        try:
-            body = request.body
-            requestJson = json.loads(body)
-            authorID = requestJson["author"]
-            ID2 = ''.join(ID.split('-'))
-            authorID2 = ''.join(authorID.split('-'))
-            if (ID2 != authorID2):
-                # bad request
-                raise RuntimeError
-            authorHostList = requestJson["authors"]     
-            friends = IsFriendViewSet.serializer_class.listFriends(authorID, authorHostList)
-            responseDictionary["authors"] = friends
-        except:
-            pass
-
+        # get friend list of author
+        # URL: /author/{author_id}/friends
+        responseDictionary = {"query":"friends", "authors": [], "message": "not implemented yet"}
         response = HttpResponse(json.dumps(responseDictionary))
-
         return response
+
 
     @action(methods=['get'], detail=True, url_path='friends/(?P<sk>[^/.]+)', url_name='arefriends')
     def arefriends(self, request, pk=None, sk=None):
         # ask if 2 authors are friends
         # URL: /author/{author1_id}/friends/{author2_id}
 
-        pk = request.path.split('/')[2]
-        sk = request.path.split('/')[4]
-        responseDictionary = {"query":"friends", "friends": False, "authors": [pk,sk]}
+        responseDictionary = {"query":"friends", "friends": False, "authors": [pk,sk], "message": "not yet implemented"}
         response = HttpResponse(json.dumps(responseDictionary))
-
-        try:
-            pkhost = User.objects.filter(id=pk).first().host;
-            skhost = User.objects.filter(id=sk).first().host;
-            pkhost = pkhost if (pkhost[-1] != '/') else (pkhost[:-1])
-            skhost = skhost if (skhost[-1] != '/') else (skhost[:-1])
-            pkhost = 'http://' + pkhost + '/author/' + pk
-            skhost = 'http://' + skhost + '/author/' + sk
-            responseDictionary["authors"] = [pkhost, skhost]
-            if ((FriendRequests.objects.filter(authorID=pk, friendID=sk).exists()) and (FriendRequests.objects.filter(authorID=sk, friendID=pk).exists())):
-                # the relationship goes both ways, they are firends
-                responseDictionary["friends"] = True
-            response = HttpResponse(json.dumps(responseDictionary))
-        except:
-                pass
-
         return response
 
-
-
-
+       
 class FollowersViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that processes friends requests accept/decline
+    API endpoint that handles followers
     """
 
-    queryset = Friends.objects.all()
+    queryset = Followers.objects.all()
     serializer_class = FollowersSerializer
+    
+    
+    def create(self, request):
+        # accept/decline friend request
+        responseDictionary = {"query":"following", "author": '', "followers": [], "message": "not implemented yet"}
+        response = HttpResponse(json.dumps(responseDictionary))
+        return response
+    
+    
+    def retrieve(self, request, pk=None):
+        # GET /following/authorID
+        
+        responseDictionary = {"query":"following", "author": pk, "followers": []}
+        
+        try:
+            responseDictionary["followers"] = FollowersViewSet.serializer_class.following(pk)
+            response = HttpResponse(json.dumps(responseDictionary))
+        except:
+            response = HttpResponse(json.dumps(responseDictionary))
+        return response
+        
+        
+        
+        
+        
+        
+        
+        
