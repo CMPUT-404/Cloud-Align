@@ -4,12 +4,12 @@ from django.http import HttpResponse
 
 # Create your views here.
 from django.contrib.auth import get_user_model
-from friends.models import ExtendAuthorModel
+from friends.models import FriendRequests
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from friends.serializers import ExtendAuthorModelSerializer
+from friends.serializers import FriendRequestsSerializer
 
 User = get_user_model()
 
@@ -19,23 +19,28 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     API endpoint that makes a friend request.
     """
 
-    queryset = ExtendAuthorModel.objects.all()
-    serializer_class = ExtendAuthorModelSerializer
+    queryset = FriendRequests.objects.all()
+    serializer_class = FriendRequestsSerializer
 
     def create(self, request):
         # make friend request
         responseDictionary = {"query":"friendrequest", "success": True, "message":"Friend request sent"}
+        
         try:
+            try:
+                # swagger
+                body = request.body
+                requestJson = json.loads(body)
+                authorID = requestJson["author"]["id"].split('/')[-1]
+                friendID = requestJson["friend"]["id"].split('/')[-1]
+            except:
+                # html form
+                requestJson = request.data
+                authorID = requestJson["authorID"].split("/")[-2]
+                friendID = requestJson["friendID"].split("/")[-2]
 
-            body = request.body
-            #requestJson = json.loads(body)
-            #authorID = requestJson["author"]["id"].split('/')[-1]
-            #friendID = requestJson["friend"]["id"].split('/')[-1]
-            requestJson = request.data
-            authorID = requestJson["authorID"].split("/")[-2]
-            friendID = requestJson["friendID"].split("/")[-2]
             if (not (friendID and authorID)):
-                raise RuntimeError
+                raise ValueError("No friendID or authorID was given")
             validated_data = {"authorID": authorID, "friendID": friendID}
             FriendRequestViewSet.serializer_class.create(validated_data)
             response = HttpResponse(json.dumps(responseDictionary))
@@ -54,8 +59,8 @@ class IsFriendViewSet(viewsets.ModelViewSet):
     """
     # TODO: fix hardcoding
 
-    queryset = ExtendAuthorModel.objects.all()
-    serializer_class = ExtendAuthorModelSerializer
+    queryset = FriendRequests.objects.all()
+    serializer_class = FriendRequestsSerializer
 
     @action(methods=['post', 'get'], detail=True, url_path='friends', url_name='friendInList')
     def friendInList(self, request, pk=None):
@@ -116,7 +121,7 @@ class IsFriendViewSet(viewsets.ModelViewSet):
             pkhost = 'http://' + pkhost + '/author/' + pk
             skhost = 'http://' + skhost + '/author/' + sk
             responseDictionary["authors"] = [pkhost, skhost]
-            if ((ExtendAuthorModel.objects.filter(authorID=pk, friendID=sk).exists()) and (ExtendAuthorModel.objects.filter(authorID=sk, friendID=pk).exists())):
+            if ((FriendRequests.objects.filter(authorID=pk, friendID=sk).exists()) and (ExtendAuthorModel.objects.filter(authorID=sk, friendID=pk).exists())):
                 # the relationship goes both ways, they are firends
                 responseDictionary["friends"] = True
             response = HttpResponse(json.dumps(responseDictionary))

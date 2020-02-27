@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
-from friends.models import ExtendAuthorModel
+from friends.models import FriendRequests
 from rest_framework import serializers
 
 User = get_user_model()
 
-class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
+class FriendRequestsSerializer(serializers.HyperlinkedModelSerializer):
     
     @classmethod
     def create(cls, validated_data):
@@ -13,7 +13,7 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
         author = validated_data["authorID"]
         friend = validated_data["friendID"]
         
-        if (ExtendAuthorModel.objects.filter(authorID=author, friendID=friend).exists()):
+        if (FriendRequests.objects.filter(authorID=author, friendID=friend).exists()):
             # this relation already exists in the db
             raise RuntimeError
         
@@ -21,7 +21,7 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
             # verify users (author + friend) exists
             authorUser = User.objects.get(id=author)
             friendUser = User.objects.get(id=friend)
-            extAuth = ExtendAuthorModel(authorID=authorUser, friendID=friendUser)
+            extAuth = FriendRequests(authorID=authorUser, friendID=friendUser)
             extAuth.save()
             return extAuth
         
@@ -34,11 +34,11 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
         # finds author's friends
         # returns a list of friends of authorid=pk as a list containing the friends url
         
-        results = ExtendAuthorModel.objects.filter(authorID=ID)
+        results = FriendRequests.objects.filter(authorID=ID)
         friends = []
 
         for result in results:
-            if (ExtendAuthorModel.objects.filter(authorID=result.friendID.id, friendID=ID).exists()):
+            if (FriendRequests.objects.filter(authorID=result.friendID.id, friendID=ID).exists()):
                 userData = User.objects.filter(id=result.friendID.id).first()
                 friendhost = userData.host if (userData.host[-1] != '/') else (userData.host[:-1])
                 friends.append('http://' + friendhost + '/author/' + str(userData.id))
@@ -65,5 +65,5 @@ class ExtendAuthorModelSerializer(serializers.HyperlinkedModelSerializer):
         return list(friends)
     
     class Meta:
-        model = ExtendAuthorModel
+        model = FriendRequests
         fields = ['authorID', 'friendID']
