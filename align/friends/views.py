@@ -244,6 +244,9 @@ class FollowersViewSet(viewsets.ModelViewSet):
         responseDictionary = {"query":"following", "author": pk, "followers": []}
         
         try:
+            pkUser = User.objects.get(id=pk)
+            pkhost = pkUser.host + '/author/' + str(pk)
+            responseDictionary["author"] = pkhost
             responseDictionary["followers"] = FollowersViewSet.serializer_class.following(pk)
             response = Response(responseDictionary)
         except:
