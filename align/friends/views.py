@@ -12,7 +12,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from posts.models import Posts
 from posts.serializers import PostsSerializer
-from friends.serializers import ExtendAuthorModelSerializer
 from friends.serializers import FriendRequestSerializer
 from friends.serializers import FriendsSerializer
 from friends.serializers import FollowersSerializer
@@ -31,9 +30,9 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     def create(self, request):
         # make friend request
         responseDictionary = {"query":"friendrequest", "success": True, "message":"Friend request sent"}
-        
+
         try:
-            
+
             try:
                 # swagger format
                 body = request.body
@@ -49,7 +48,7 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
                 requestJson = request.data
                 authorID = requestJson["authorID"].split("/")[-2]
                 friendID = requestJson["friendID"].split("/")[-2]
-                
+
             if (not (friendID and authorID)):
                 raise ValueError("No friendID or authorID was given")
             validated_data = {"author": authorID, "friend": friendID}
@@ -63,8 +62,8 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
             response = Response(responseDictionary)
 
         return response
-    
-    
+
+
 class FriendViewSet(viewsets.ModelViewSet):
     """
     API endpoint that processes accepting/declining friends requests
@@ -76,11 +75,11 @@ class FriendViewSet(viewsets.ModelViewSet):
     @action(methods=['post'], detail=False, url_path='requestprocess', url_name='friendRequestProcess')
     def friendRequestProcess(self, request):
         # accept/decline friend request
-        
-        
+
+
         # POST /friend/requestprocess
         responseDictionary = {"query":"friendrequestprocess", "success": True}
-            
+
         try:
             try:
                 # swagger
@@ -99,7 +98,7 @@ class FriendViewSet(viewsets.ModelViewSet):
                 authorID = requestJson["author"].split("/")[-2]
                 friendID = requestJson["friend"].split("/")[-2]
                 friendStatus = "accept"
-    
+
             if (not (friendID and authorID)):
                 raise ValueError("No friendID or authorID was given")
             validated_data = {"author": authorID, "friend": friendID}
@@ -113,19 +112,19 @@ class FriendViewSet(viewsets.ModelViewSet):
                 FollowersViewSet.serializer_class.delete(validated_data, supress=True)       # delete reverse follower
                 FriendViewSet.serializer_class.create(validated_data)           # create friend
             response = Response(responseDictionary)
-    
+
         except:
             responseDictionary["success"] = False
             response = Response(responseDictionary)
-    
+
         return response
 
     @action(methods=['post'], detail=False, url_path='delete', url_name='friendDelete')
-    def friendDelete(self, request):        
-        
+    def friendDelete(self, request):
+
         # POST /friend/delete
         responseDictionary = {"query":"frienddelete", "success": True}
-            
+
         try:
             try:
                 # swagger
@@ -142,7 +141,7 @@ class FriendViewSet(viewsets.ModelViewSet):
                 requestJson = request.data
                 authorID = requestJson["author"].split("/")[-2]
                 friendID = requestJson["friend"].split("/")[-2]
-    
+
             if (not (friendID and authorID)):
                 raise ValueError("No friendID or authorID was given")
             validated_data = {"author": authorID, "friend": friendID}
@@ -150,20 +149,20 @@ class FriendViewSet(viewsets.ModelViewSet):
             validated_data = {"author": friendID, "friend": authorID}
             FollowersViewSet.serializer_class.create(validated_data)    # create one way follower
             response = Response(responseDictionary)
-    
+
         except:
             responseDictionary["success"] = False
             response = Response(responseDictionary)
-    
+
         return response
-        
-           
+
+
 
 class AuthorViewSet(viewsets.ModelViewSet):
     """
     API endpoint that asks a service if anyone in the list is a friend.
     """
-    
+
     queryset = Friends.objects.all()
     serializer_class = FriendsSerializer
 
@@ -183,7 +182,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
             except:
                 response = Response(responseDictionary)
             return response
-        
+
         elif (request.method == 'POST'):
             # ask if anyone in the list is a friend
             # URL: ​/author​/{author_id}​/friends
@@ -193,7 +192,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
                 body = request.body
                 requestJson = json.loads(body)
                 pk = requestJson["author"]
-                listOfFriends = requestJson["authors"]       
+                listOfFriends = requestJson["authors"]
                 responseDictionary["authors"] = FriendsSerializer.areFriendsMany(pk, listOfFriends)
                 response = Response(responseDictionary)
             except:
@@ -220,10 +219,10 @@ class AuthorViewSet(viewsets.ModelViewSet):
             responseDictionary["friends"] = FriendsSerializer.areFriendsSingle(pk,sk)
         except:
             response = Response(responseDictionary)
-            
+
         return response
 
-       
+
 class FollowersViewSet(viewsets.ModelViewSet):
     """
     API endpoint that handles followers
@@ -231,20 +230,20 @@ class FollowersViewSet(viewsets.ModelViewSet):
 
     queryset = Followers.objects.all()
     serializer_class = FollowersSerializer
-    
-    
+
+
     def create(self, request):
         # accept/decline friend request
         responseDictionary = {"query":"following", "author": '', "followers": [], "message": "not implemented yet"}
         response = Response(responseDictionary)
         return response
-    
-    
+
+
     def retrieve(self, request, pk=None):
         # GET /following/authorID
-        
+
         responseDictionary = {"query":"following", "author": pk, "followers": []}
-        
+
         try:
             pkUser = User.objects.get(id=pk)
             pkhost = pkUser.host + '/author/' + str(pk)
@@ -254,12 +253,12 @@ class FollowersViewSet(viewsets.ModelViewSet):
         except:
             response = Response(responseDictionary)
         return response
-        
+
     @action(methods=['post'], detail=False, url_path='delete', url_name='deleteFollowing')
-    def deleteFollowing(self, request):    
-        
+    def deleteFollowing(self, request):
+
         responseDictionary = {"query": "delete following", "success": True}
-        
+
         try:
             try:
                 # swagger
@@ -276,17 +275,13 @@ class FollowersViewSet(viewsets.ModelViewSet):
                 requestJson = request.data
                 authorID = requestJson["author"].split("/")[-2]
                 friendID = requestJson["following"].split("/")[-2]
-                        
+
             validated_data = {"author": friendID, "friend": authorID}
             FollowersViewSet.serializer_class.delete(validated_data)
             response = Response(responseDictionary)
-                
+
         except:
             responseDictionary["success"] = False
             response = Response(responseDictionary)
-            
+
         return response
-        
-        
-        
-        

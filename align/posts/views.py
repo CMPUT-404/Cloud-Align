@@ -15,10 +15,8 @@ from django.shortcuts import render
 import json
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
-from friends.models import ExtendAuthorModel
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
-from friends.serializers import ExtendAuthorModelSerializer
 from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory
 from django.db.models import Q
@@ -54,7 +52,7 @@ def get_posts(request):
             'request': Request(requests),
         }
         id = request.data.get('id')
-        queryset = Posts.objects.all().filter(Q(visibilities = True), Q(visible_to = id )| Q(visibilities = True)).order_by("-publish")
+        queryset = Posts.objects.all().filter(Q(visibilities = True)|Q(visible_to = id)).order_by("-publish")
         serializer_class = PostsSerializer(instance=queryset, context= serializer_context, many=True)
         #data = serializers.serialize('json', self.get_queryset())
         return Response(serializer_class.data)
@@ -64,8 +62,8 @@ def get_posts(request):
         #}
         print(request.data)
         serializer = PostsSerializer(data = request.data)
-        serializer.
-        serializer.is_valid()
+        #serializer.
+        #serializer.is_valid()
         #serializer.save()
         #id = request.data.get('id')
         #queryset = Posts.objects.all().filter(author).order_by("-publish")
