@@ -8,7 +8,8 @@ from friends.models import ExtendAuthorModel
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
+from posts.models import Posts
+from posts.serializers import PostsSerializer
 from friends.serializers import ExtendAuthorModelSerializer
 
 User = get_user_model()
