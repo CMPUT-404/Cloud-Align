@@ -10,7 +10,9 @@ from friends.models import Followers
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
+from posts.models import Posts
+from posts.serializers import PostsSerializer
+from friends.serializers import ExtendAuthorModelSerializer
 from friends.serializers import FriendRequestSerializer
 from friends.serializers import FriendsSerializer
 from friends.serializers import FollowersSerializer
