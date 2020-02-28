@@ -23,5 +23,19 @@ class PostsSerializer(serializers.HyperlinkedModelSerializer):
     def get_contentType(self,obj):
         return ("text/plain")
 
+class PostsCreateSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_data):
-        return Posts(**validated_data)
+        print(validated_data)
+        post = Posts.objects.create(
+            title=validated_data.get('title', Posts.title),
+            author=validated_data.get('author', Posts.author),
+            description=validated_data.get('description', Posts.description),
+            content=validated_data.get('content', Posts.content),
+            visibilities=validated_data.get('visibilities', Posts.visibilities),
+            visible_to =validated_data.get('visible_to', Posts.visible_to),
+            publish = validated_data.get('publish', Posts.publish),
+        )
+        return post
+    class Meta:
+        model = Posts
+        fields = ['title','author', 'description','content','visibilities','visible_to','publish']
