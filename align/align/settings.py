@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     #
     'rest_framework',
     'corsheaders',
-    'django.contrib.sites',  # FIXME not used
+    # 'django.contrib.sites',  # FIXME not used
     #
     'posts.apps.PostsConfig',
     'comments.apps.CommentsConfig',
@@ -86,6 +86,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'align.wsgi.application'
 
 
@@ -120,6 +122,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
 
 # Internationalization

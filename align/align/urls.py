@@ -31,14 +31,18 @@ router.register(r'posts', posts_views.PostsViewSet,basename='Post-list')
 router.register(r'comments', comments_views.CommentsViewSet)
 
 router.register(r'friendrequest', friends_views.FriendRequestViewSet)
+
 router.register(r'author', friends_views.IsFriendViewSet, basename="author")
-#router.register(r'auth', posts_views.AuthorPosts,basename='author-Post')
+
+router.register(r'friend', friends_views.FriendViewSet, basename="friend")
+router.register(r'following', friends_views.FollowersViewSet, basename="following")
 
 
 urlpatterns = [
     path('', include('posts.urls')),
     path('admin/', admin.site.urls),
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-    #path('author/posts', posts_views.AuthorPosts),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^users/login$', user_views.LoginView.as_view()),
+    url(r'^users/register$', user_views.RegisterView.as_view()),
 ]
