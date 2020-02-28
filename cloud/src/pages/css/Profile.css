@@ -1,6 +1,8 @@
 .form{
-    position: relative;
-    top: 100px;
+    position: absolute;
+    top: 300pt;
+    left: 10pt;
+
 }
 
 .form input{
@@ -19,9 +21,9 @@
 .form button{
    
     
-    position: relative;
-    top: 3pt;
-    left: -550pt;
+    position: absolute;
+    top: 110pt;
+    left: 0pt;
     width: 100pt;
     height: 30pt;
     border-color: rgb(184, 179, 245);
@@ -33,6 +35,19 @@
    
 
     
+}
+
+
+#B{
+    position: absolute;
+    
+    left: 0%;
+}
+
+#posts{
+    margin-left: 15%;
+    margin-right: 25%;
+    margin-top: 65pt;
 }
 
 

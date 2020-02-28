@@ -1,9 +1,6 @@
 import React from 'react';
-import RequestsData from './Data/RequestsData'
-import CardRequest from './FriendParts/CardRequest';
+import CardRequest from './CardRequest';
 import 'antd/dist/antd.css';
-
-
 import { Badge, Icon } from 'antd';
 
 
@@ -13,6 +10,17 @@ class FriendRequest extends React.Component {
     this.state={
       friendRequests : [],
       count: 0,
+      username:''
+    }
+  }
+
+  fetchUsername(authorId) {
+    let authorRequest = new XMLHttpRequest();
+    authorRequest.open('GET',"http://127.0.0.1:8000/users/".concat(authorId));
+    authorRequest.send();
+    authorRequest.onload = () => {
+      let author = JSON.parse(authorRequest.response);
+      this.setState({username:author.username})
     }
   }
 
@@ -25,17 +33,8 @@ class FriendRequest extends React.Component {
       let tempRequests = [];
       for(let i = 0;i<requests.length;i++){
         let authorId = requests[i].authorID.split("/").slice(4)[0];
-        let authorRequest = new XMLHttpRequest();
-        authorRequest.open('GET',"http://127.0.0.1:8000/users/".concat(authorId));
-        let username;
-        authorRequest.onreadystatechange = function() {
-          var data = JSON.parse(authorRequest.responseText);
-          username = data.username;
-          console.log(username);
-        }
-        authorRequest.send();
-        console.log(username);
-        let eachRequest = <CardRequest displayName = "test" friendRequest={requests[i]} />
+        this.fetchUsername(authorId);
+        let eachRequest = <CardRequest displayName = {this.state.username} friendRequest={requests[i]} />
         tempRequests.push(eachRequest);
       }
       this.setState({
@@ -44,12 +43,6 @@ class FriendRequest extends React.Component {
       })
     }
   }
-    /*
-    render(){
-    let request = new XMLHttpRequest()
-    request.open('POST', 'http://162.246.157.219:25565/friendrequest/')
-    request.send()
-    */
 
     render(){
       return (

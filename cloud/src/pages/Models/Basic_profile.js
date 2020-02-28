@@ -13,11 +13,8 @@ class Basic_profile extends React.Component{
     }
 
     render(){
-
-
-    
     var request = new XMLHttpRequest()
-    request.open('GET','http://162.246.157.219:25565/users/2')
+    request.open('GET',this.props.url)
     request.send()
     
     request.onload = ()=>{
@@ -25,9 +22,6 @@ class Basic_profile extends React.Component{
         this.setState({name: temp.username,
             email: temp.email})
         // this.setState({email: temp.url})
-        
-        
-            
     }
 
     

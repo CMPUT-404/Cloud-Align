@@ -1,6 +1,14 @@
 import React from 'react';
 import Basic_profile from './Models/Basic_profile';
 import './css/Profile.css';
+import CardContent from '../Components/CardContent';
+
+
+
+
+
+// import {Route,Link,BrowserRouter as Router} from 'react-router-dom';
+
 
 
 class Profile extends React.Component {
@@ -8,16 +16,21 @@ class Profile extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-    
-      userdata : 'http://162.246.157.219:25565/users/2/'
+      Props: props,
+      userdata : 'http://162.246.157.219:25565/users/fc89aa45-ce71-43fa-b111-84e1ddecb704/',
+      path: "/Timeline",
+      postComponents : []
     }
   }
 
-  
+
 
   save_change(tempdata){
-    
 
+
+  
+
+  
   var data = {};
   var email = document.getElementById("email").value;
   var name = document.getElementById("name").value;
@@ -30,7 +43,7 @@ class Profile extends React.Component {
   var putreq = new XMLHttpRequest(); 
   putreq.open('PUT',tempdata.userdata,false);
   
-  putreq.setRequestHeader('Authorization', "Basic " + btoa('admin:123456'));
+  putreq.setRequestHeader('Authorization', "Basic " + btoa('joe:123456'));
   putreq.setRequestHeader('Content-Type', 'application/json');
   
   putreq.onreadystatechange = function () {
@@ -55,7 +68,21 @@ class Profile extends React.Component {
 
   render(){ 
 
+    let request = new XMLHttpRequest()
+    request.open('GET', 'http://162.246.157.219:25565/posts/')
+    request.send()
+    request.onload = () => {
+      let posts = JSON.parse(request.response)
+      var tempPostList = [] 
+      for(let i=0;i<posts.length;i++){
+        var eachPost = <CardContent post={posts[i]} />
+        tempPostList.push(eachPost)
+      }
+      this.setState({postComponents: tempPostList})
+    }
+
     
+      
     
 
     // GET
@@ -84,28 +111,46 @@ class Profile extends React.Component {
       
 
     return (
+      
       <div className="Profile" >
 
+        
+        <div id="B">
+        <Basic_profile url={this.state.userdata}/>
+        </div>
+          
+        
+        
 
-        <Basic_profile />
+        <div id="form">
+          <form className="form"  onSubmit={ ()=>this.save_change(this.state)} id="changes">
+            <input type="text" id="name" placeholder="Name" ></input><br></br>
+            <input type="text" id="email" placeholder="Email"></input><br></br>
+            <input type="text" placeholder="PhoneNumber"></input><br></br>
+            
+            <button type="submit"> 
+            Save changes
+            </button>
+            
+
+          </form>
+          <div id="posts">
+            {this.state.postComponents}
+          </div>
+          
+
+        </div>
 
         
-        <form className="form"  onSubmit={ ()=>this.save_change(this.state)} id="changes">
-          <input type="text" id="name" placeholder="Name" ></input><br></br>
-          <input type="text" id="email" placeholder="Email"></input><br></br>
-          <input type="text" placeholder="PhoneNumber"></input><br></br>
-          
-          <button type="submit"> 
-          Save changes
-          </button>
+        
 
-        </form>
        
-
+        
+        
+       
+       
+    
       </div>
-
-      
-
 
 
     )

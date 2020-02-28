@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { Card, Button, Modal, Input } from 'antd';
 import { Route, Link } from 'react-router-dom'
 import RequestsData from '../Data/RequestsData'
-import FriendRequest from '../Friends'
+import FriendRequest from './Friends'
 
 
 class CardRequest extends React.Component{
@@ -38,12 +38,12 @@ class CardRequest extends React.Component{
     render(){
         return(
             <div>
-                <Card title={this.props.friendRequest.displayName} extra={ <Link to={'/Timeline/' + this.props.friendRequest.id} >see more</Link> }>
-                <Link to={'/Profile/'+this.props.friendRequest.author}>{this.props.friendRequest.author}</Link>
-                <Link to={'/Profile/'+this.props.friendRequest.author}><img id="cardProfile" align="left" src={require('../../Images/pepe.jpeg')} /></Link>
+                <Card title={this.props.friendRequest.displayName}>
+
+                <Link to={'/Profile/'+this.props.friendRequest.authorID}><img id="cardProfile" align="left" src={require('../../Images/pepe.jpeg')} /></Link>
                 <h2> {this.props.displayName} {'wants to add you as a friend'}</h2>
                 <hr/>
-                <p> {'from'} {this.props.friendRequest.id} </p>
+                <Link to={'/Profile/'+this.props.friendRequest.authorID}>{this.props.friendRequest.authorID}</Link>
                 <Button onClick={this.decline}>decline</Button>
                 <Button onClick={this.increase}>accept</Button>
                 </Card>

@@ -1,0 +1,43 @@
+body{
+    background-image: url('../../Images/cloud.JPG');
+    background-size: cover; /*One pic cover the whole background*/
+}
+
+h2, h3{
+    text-align: center;
+}
+
+Label{
+    display: block;
+    text-align: center;
+    line-height: 150%;
+}
+
+
+#emailInput, #passwordInput, #emailLabel, #passwordLabel{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+
+#submitButton, #registerButton{
+    margin-top: 15px;
+    margin-left: 230pt;
+    border-color: rgb(152, 255, 255);    
+    border-radius: 15%;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    float: left;
+    font-size: 16px;
+    cursor: pointer;
+    width:20%;
+    text-align:center;
+    
+}
+
+#submitButton:hover, #registerButton:hover{
+    background-color:  rgb(152, 255, 255);
+}

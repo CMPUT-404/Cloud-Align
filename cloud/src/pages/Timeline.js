@@ -1,31 +1,34 @@
 import React from 'react';
-import PostsData from '../PostsData'
 import InputBox from '../Components/InputBox';
 import CardContent from '../Components/CardContent';
 
 
 class Timeline extends React.Component {
-  state = {
-    current: undefined
-  };
-
-  changeCurrent = (id) => {
-    this.setState({
-      current: id
-    })
+  constructor(props){
+    super(props)
+    this.state = {
+      "postComponents": []
+    }
   }
 
   render(){
-    var postComponents = []
-    for(var i=0;i<PostsData[0].posts.length;i++){
-        var eachPost = <CardContent key={PostsData[0].posts[i].id} post={PostsData[0].posts[i]} index={i} onChangeCurrent={this.changeCurrent}/>
-        postComponents.push(eachPost)
+    let request = new XMLHttpRequest()
+    request.open('GET', 'http://162.246.157.219:25565/posts/')
+    request.send()
+    request.onload = () => {
+      let posts = JSON.parse(request.response)
+      var tempPostList = [] 
+      for(let i=0;i<posts.length;i++){
+        var eachPost = <CardContent post={posts[i]} />
+        tempPostList.push(eachPost)
+      }
+      this.setState({postComponents: tempPostList})
     }
 
     return(
       <div className="Timeline">
         <InputBox id="InputBox"/>
-        {postComponents}
+        {this.state.postComponents}
       </div>
     )
   }

@@ -2,11 +2,12 @@ nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    min-height: 10vh;
+    min-height: 45pt;
     background-color: rgb(152, 255, 255);
 }
 
 .nav-links{
+    font-size: large;
     width: 50%;
     display: flex;
     justify-content: space-around;
@@ -15,5 +16,5 @@ nav{
 }
 
 #logo{
-    height:20pt;
+    height:45pt;
 }
