@@ -253,9 +253,37 @@ class FollowersViewSet(viewsets.ModelViewSet):
             response = Response(responseDictionary)
         return response
         
+    @action(methods=['post'], detail=False, url_path='delete', url_name='deleteFollowing')
+    def deleteFollowing(self, request):    
         
+        responseDictionary = {"query": "delete following", "success": True}
         
-        
+        try:
+            try:
+                # swagger
+                body = request.body
+                requestJson = json.loads(body)
+                authorID = requestJson["author"].split('/')[-1]             # person requesting deletion
+                friendID = requestJson["following"].split('/')[-1]            # friend getting deleted
+                if (authorID == ''):
+                    requestJson["author"].split('/')[-2]
+                if (friendID == ''):
+                    requestJson["following"].split('/')[-2]
+            except:
+                # html form
+                requestJson = request.data
+                authorID = requestJson["author"].split("/")[-2]
+                friendID = requestJson["following"].split("/")[-2]
+                        
+            validated_data = {"author": friendID, "friend": authorID}
+            FollowersViewSet.serializer_class.delete(validated_data)
+            response = Response(responseDictionary)
+                
+        except:
+            responseDictionary["success"] = False
+            response = Response(responseDictionary)
+            
+        return response
         
         
         
