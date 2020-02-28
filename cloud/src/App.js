@@ -10,15 +10,40 @@ class App extends React.Component {
   constructor(){
     super()
     this.state={
-      isLoggedIn: true,
+      isLoggedIn: false,
+      username: "",
+      password: ""
     }
+    this.handleLogin = this.handleLogin.bind(this);
+    this.usernameChange = this.usernameChange.bind(this);
+    this.passwordChange = this.passwordChange.bind(this);
+  }
+
+  handleLogin(){
+    let request = new XMLHttpRequest()
+    request.open('GET', 'http://162.246.157.219:25565/users/login')
+    request.setRequestHeader("Authorization", "Basic " + btoa(this.state.username+":"+this.state.password));
+    request.send()
+  }
+
+  usernameChange(e){
+    this.setState({username: e.target.value})
+  }
+
+
+  passwordChange(e){
+    this.setState({password: e.target.value})
   }
 
   render(){  
-
     if (this.state.isLoggedIn===false){
       return (
-        <Login />
+        <Login handleLogin={this.handleLogin} 
+              username={this.state.username} 
+              password={this.state.password} 
+              usernameChange={this.usernameChange}
+              passwordChange={this.passwordChange}
+        />
       )
     } else {
       return(
