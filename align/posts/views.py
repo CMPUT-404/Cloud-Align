@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from posts.models import Posts
-from posts.serializers import PostsSerializer
+from posts.serializers import PostsSerializer,PostsCreateSerializer
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -61,7 +61,12 @@ def get_posts(request):
         #    'request': Request(requests)
         #}
         print(request.data)
-        serializer = PostsSerializer(data = request.data)
+        serializer = PostsCreateSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse("the post has been successfully added")
+        else:
+            return HttpResponse("the post has not been added")
         #serializer.
         #serializer.is_valid()
         #serializer.save()
@@ -69,4 +74,3 @@ def get_posts(request):
         #queryset = Posts.objects.all().filter(author).order_by("-publish")
         #serializer_class = PostsSerializer(instance=queryset, context= serializer_context, many=True)
         #data = serializers.serialize('json', self.get_queryset())
-        return HttpResponse("the post has been successfully added")
