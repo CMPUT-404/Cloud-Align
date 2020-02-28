@@ -53,12 +53,12 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
             validated_data = {"author": authorID, "friend": friendID}
             FriendRequestViewSet.serializer_class.create(validated_data)        # create request
             FollowersViewSet.serializer_class.create(validated_data)                          # create follower
-            response = HttpResponse(json.dumps(responseDictionary))
+            response = Response(responseDictionary)
 
         except:
             responseDictionary["success"] = False
             responseDictionary["message"] = "Friend request not sent"
-            response = HttpResponse(json.dumps(responseDictionary))
+            response = Response(responseDictionary)
 
         return response
     
@@ -109,11 +109,11 @@ class FriendViewSet(viewsets.ModelViewSet):
                     validated_data = {"author": friendID, "friend": authorID}
                     FollowersViewSet.serializer_class.delete(validated_data, supress=True)       # delete reverse follower
                     FriendViewSet.serializer_class.create(validated_data)           # create friend
-                response = HttpResponse(json.dumps(responseDictionary))
+                response = Response(responseDictionary)
     
             except:
                 responseDictionary["success"] = False
-                response = HttpResponse(json.dumps(responseDictionary))
+                response = Response(responseDictionary)
     
             return response
         
@@ -144,23 +144,23 @@ class FriendViewSet(viewsets.ModelViewSet):
                 FriendViewSet.serializer_class.delete(validated_data)       # delete friend relation
                 validated_data = {"author": friendID, "friend": authorID}
                 FollowersViewSet.serializer_class.create(validated_data)    # create one way follower
-                response = HttpResponse(json.dumps(responseDictionary))
+                response = Response(responseDictionary)
     
             except:
                 responseDictionary["success"] = False
-                response = HttpResponse(json.dumps(responseDictionary))
+                response = Response(responseDictionary)
     
             return response
         
         else:
-            return HttpResponse(Http404("Page does not exist"))
+            responseDictionary = {"Error":"Page does not exist"}
+            return Response(responseDictionary)
             
 
 class AuthorViewSet(viewsets.ModelViewSet):
     """
     API endpoint that asks a service if anyone in the list is a friend.
     """
-    # TODO: delete the whole thing
     
     queryset = Friends.objects.all()
     serializer_class = FriendsSerializer
@@ -176,10 +176,10 @@ class AuthorViewSet(viewsets.ModelViewSet):
             # URL: /author/{author_id}/friends
             responseDictionary = {"query":"friends", "authors": []}
             try:
-                responseDictionary["authors"] = AuthorViewSet.serializer_class.friendsList(pk)
-                response = HttpResponse(json.dumps(responseDictionary))
+                responseDictionary["authors"] = FriendsSerializer.friendsList(pk)
+                response = Response(responseDictionary)
             except:
-                response = HttpResponse(json.dumps(responseDictionary))
+                response = Response(responseDictionary)
             return response
         
         elif (request.method == 'POST'):
@@ -192,14 +192,15 @@ class AuthorViewSet(viewsets.ModelViewSet):
                 requestJson = json.loads(body)
                 pk = requestJson["author"]
                 listOfFriends = requestJson["authors"]       
-                responseDictionary["authors"] = AuthorViewSet.serializer_class.areFriendsMany(pk, listOfFriends)
-                response = HttpResponse(json.dumps(responseDictionary))
+                responseDictionary["authors"] = FriendsSerializer.areFriendsMany(pk, listOfFriends)
+                response = Response(responseDictionary)
             except:
-                response = HttpResponse(json.dumps(responseDictionary))
+                response = Response(responseDictionary)
             return response
 
         else:
-            return HttpResponse(Http404("Page does not exist"))
+            responseDictionary = {"Error":"Page does not exist"}
+            return Response(responseDictionary)
 
     @action(methods=['get'], detail=True, url_path='friends/(?P<sk>[^/.]+)', url_name='areFriends')
     def areFriends(self, request, pk=None, sk=None):
@@ -213,10 +214,10 @@ class AuthorViewSet(viewsets.ModelViewSet):
             pkhost = pkUser.host + '/author/' + str(pk)
             skhost = skUser.host +'/author/' + str(sk)
             responseDictionary["authors"] = [pkhost, skhost]
-            response = HttpResponse(json.dumps(responseDictionary))
-            responseDictionary["friends"] = AuthorViewSet.serializer_class.areFriendsSingle(pk,sk)
+            response = Response(responseDictionary)
+            responseDictionary["friends"] = FriendsSerializer.areFriendsSingle(pk,sk)
         except:
-            response = HttpResponse(json.dumps(responseDictionary))
+            response = Response(responseDictionary)
             
         return response
 
@@ -233,7 +234,7 @@ class FollowersViewSet(viewsets.ModelViewSet):
     def create(self, request):
         # accept/decline friend request
         responseDictionary = {"query":"following", "author": '', "followers": [], "message": "not implemented yet"}
-        response = HttpResponse(json.dumps(responseDictionary))
+        response = Response(responseDictionary)
         return response
     
     
@@ -244,9 +245,9 @@ class FollowersViewSet(viewsets.ModelViewSet):
         
         try:
             responseDictionary["followers"] = FollowersViewSet.serializer_class.following(pk)
-            response = HttpResponse(json.dumps(responseDictionary))
+            response = Response(responseDictionary)
         except:
-            response = HttpResponse(json.dumps(responseDictionary))
+            response = Response(responseDictionary)
         return response
         
         
