@@ -12,7 +12,14 @@ User = get_user_model()
 #    displayName = models.CharField(max_length=40, blank=True, default="{} {}".format(firstName, lastName))
 #    github = models.URLField(blank=True)
 
-class ExtendAuthorModel(models.Model):
-    # change to reference host instead of id
+class FriendRequests(models.Model):
     authorID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authorID')
     friendID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendID')
+    
+class Followers(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Follower_author')
+    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+    
+class Friends(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Friends_author')
+    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friend')
