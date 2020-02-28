@@ -140,6 +140,40 @@ class FriendsSerializer(serializers.HyperlinkedModelSerializer):
         except:
             raise RuntimeError("Unable to delete friend")
             
+    @classmethod
+    def areFriendsSingle(cls, author,friend):
+        # check if author and friend are friends
+        return Friends.objects.filter(author=author, friend=friend).exists()
+
+    @classmethod
+    def friendsList(cls, authorID):
+        # return friends list
+        
+        try:
+            friends = Friends.objects.filter(author=authorID)         # list of friends
+            following = []
+        
+            for friend in friends:
+                following.append(friend.friend.host + '/author/' + str(friend.friend.id))   
+                
+            return following
+        except:
+            RuntimeError("Unable to retrieve friends list")
+        
+    @classmethod
+    def areFriendsMany(cls, author, friendList):
+        # return list of people in friendList who are friends
+        
+        friends = FriendsSerializer.friendsList(author)         # list of authors friends
+        areFriends = []
+        
+        for friend in friendList:
+            if friend in friends:
+                areFriends.append(friend)
+                
+        return areFriends        
+        
+        
     class Meta:
         model = Friends
         fields = ['author', 'friend']

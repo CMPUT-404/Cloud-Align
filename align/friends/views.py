@@ -156,37 +156,68 @@ class FriendViewSet(viewsets.ModelViewSet):
             return HttpResponse(Http404("Page does not exist"))
             
 
-class IsFriendViewSet(viewsets.ModelViewSet):
+class AuthorViewSet(viewsets.ModelViewSet):
     """
     API endpoint that asks a service if anyone in the list is a friend.
     """
-    # TODO: fix hardcoding
-
-    queryset = FriendRequests.objects.all()
-    serializer_class = FriendRequestSerializer
+    # TODO: delete the whole thing
+    
+    queryset = Friends.objects.all()
+    serializer_class = FriendsSerializer
 
     @action(methods=['post', 'get'], detail=True, url_path='friends', url_name='friendInList')
     def friendInList(self, request, pk=None):
-        # ask if anyone in the list is a friend
-        # URL: ​/author​/{author_id}​/friends
 
         #ID = request.path.split('/')[2]
         #ID = pk
 
-        # get friend list of author
-        # URL: /author/{author_id}/friends
-        responseDictionary = {"query":"friends", "authors": [], "message": "not implemented yet"}
-        response = HttpResponse(json.dumps(responseDictionary))
-        return response
+        if (request.method == 'GET'):
+            # get friend list of author
+            # URL: /author/{author_id}/friends
+            responseDictionary = {"query":"friends", "authors": []}
+            try:
+                responseDictionary["authors"] = AuthorViewSet.serializer_class.friendsList(pk)
+                response = HttpResponse(json.dumps(responseDictionary))
+            except:
+                response = HttpResponse(json.dumps(responseDictionary))
+            return response
+        
+        elif (request.method == 'POST'):
+            # ask if anyone in the list is a friend
+            # URL: ​/author​/{author_id}​/friends
+            responseDictionary = {"query":"friends", "author": str(pk), "authors": []}
+            try:
+                # swagger
+                body = request.body
+                requestJson = json.loads(body)
+                pk = requestJson["author"]
+                listOfFriends = requestJson["authors"]       
+                responseDictionary["authors"] = AuthorViewSet.serializer_class.areFriendsMany(pk, listOfFriends)
+                response = HttpResponse(json.dumps(responseDictionary))
+            except:
+                response = HttpResponse(json.dumps(responseDictionary))
+            return response
 
+        else:
+            return HttpResponse(Http404("Page does not exist"))
 
-    @action(methods=['get'], detail=True, url_path='friends/(?P<sk>[^/.]+)', url_name='arefriends')
-    def arefriends(self, request, pk=None, sk=None):
+    @action(methods=['get'], detail=True, url_path='friends/(?P<sk>[^/.]+)', url_name='areFriends')
+    def areFriends(self, request, pk=None, sk=None):
         # ask if 2 authors are friends
         # URL: /author/{author1_id}/friends/{author2_id}
 
-        responseDictionary = {"query":"friends", "friends": False, "authors": [pk,sk], "message": "not yet implemented"}
-        response = HttpResponse(json.dumps(responseDictionary))
+        responseDictionary = {"query":"friends", "friends": False, "authors": [str(pk),str(sk)]}
+        try:
+            pkUser = User.objects.get(id=pk)
+            skUser = User.objects.get(id=sk)
+            pkhost = pkUser.host + '/author/' + str(pk)
+            skhost = skUser.host +'/author/' + str(sk)
+            responseDictionary["authors"] = [pkhost, skhost]
+            response = HttpResponse(json.dumps(responseDictionary))
+            responseDictionary["friends"] = AuthorViewSet.serializer_class.areFriendsSingle(pk,sk)
+        except:
+            response = HttpResponse(json.dumps(responseDictionary))
+            
         return response
 
        
