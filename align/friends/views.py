@@ -71,91 +71,91 @@ class FriendViewSet(viewsets.ModelViewSet):
     queryset = Friends.objects.all()
     serializer_class = FriendsSerializer
 
-    def create(self, request):
+    @action(methods=['post'], detail=False, url_path='requestprocess', url_name='friendRequestProcess')
+    def friendRequestProcess(self, request):
         # accept/decline friend request
         
-        if (request.path == '/friendrequestprocess/'):
-            # POST /friendrequest process
-            responseDictionary = {"query":"friendrequestprocess", "success": True}
-            
-            try:
-                try:
-                    # swagger
-                    body = request.body
-                    requestJson = json.loads(body)
-                    authorID = requestJson["author"].split('/')[-1]             # person accepting/declining
-                    friendID = requestJson["friend"].split('/')[-1]             # person who sent request
-                    friendStatus = requestJson["status"]
-                    if (authorID == ''):
-                        requestJson["author"].split('/')[-2]
-                    if (friendID == ''):
-                        requestJson["friend"].split('/')[-2]
-                except:
-                    # html form
-                    requestJson = request.data
-                    authorID = requestJson["author"].split("/")[-2]
-                    friendID = requestJson["friend"].split("/")[-2]
-                    friendStatus = "accept"
-    
-                if (not (friendID and authorID)):
-                    raise ValueError("No friendID or authorID was given")
-                validated_data = {"author": authorID, "friend": friendID}
-                FriendRequestViewSet.serializer_class.delete(validated_data)    # delete friends request
-                if (friendStatus == "accept"):
-                    # create friend
-                    FollowersViewSet.serializer_class.delete(validated_data)        # delete following relation
-                    validated_data = {"author": friendID, "friend": authorID}
-                    FriendRequestViewSet.serializer_class.delete(validated_data, supress=True)   # delete reverse friend request
-                    validated_data = {"author": friendID, "friend": authorID}
-                    FollowersViewSet.serializer_class.delete(validated_data, supress=True)       # delete reverse follower
-                    FriendViewSet.serializer_class.create(validated_data)           # create friend
-                response = Response(responseDictionary)
-    
-            except:
-                responseDictionary["success"] = False
-                response = Response(responseDictionary)
-    
-            return response
         
-        elif (request.path == '/frienddelete/'):
-            # POST /frienddelete
-            responseDictionary = {"query":"frienddelete", "success": True}
+        # POST /friend/requestprocess
+        responseDictionary = {"query":"friendrequestprocess", "success": True}
             
+        try:
             try:
-                try:
-                    # swagger
-                    body = request.body
-                    requestJson = json.loads(body)
-                    authorID = requestJson["author"].split('/')[-1]             # person requesting deletion
-                    friendID = requestJson["friends"].split('/')[-1]            # friend getting deleted
-                    if (authorID == ''):
-                        requestJson["author"].split('/')[-2]
-                    if (friendID == ''):
-                        requestJson["friend"].split('/')[-2]
-                except:
-                    # html form
-                    requestJson = request.data
-                    authorID = requestJson["author"].split("/")[-2]
-                    friendID = requestJson["friend"].split("/")[-2]
+                # swagger
+                body = request.body
+                requestJson = json.loads(body)
+                authorID = requestJson["author"].split('/')[-1]             # person accepting/declining
+                friendID = requestJson["friend"].split('/')[-1]             # person who sent request
+                friendStatus = requestJson["status"]
+                if (authorID == ''):
+                    requestJson["author"].split('/')[-2]
+                if (friendID == ''):
+                    requestJson["friend"].split('/')[-2]
+            except:
+                # html form
+                requestJson = request.data
+                authorID = requestJson["author"].split("/")[-2]
+                friendID = requestJson["friend"].split("/")[-2]
+                friendStatus = "accept"
     
-                if (not (friendID and authorID)):
-                    raise ValueError("No friendID or authorID was given")
-                validated_data = {"author": authorID, "friend": friendID}
-                FriendViewSet.serializer_class.delete(validated_data)       # delete friend relation
+            if (not (friendID and authorID)):
+                raise ValueError("No friendID or authorID was given")
+            validated_data = {"author": authorID, "friend": friendID}
+            FriendRequestViewSet.serializer_class.delete(validated_data)    # delete friends request
+            if (friendStatus == "accept"):
+                # create friend
+                FollowersViewSet.serializer_class.delete(validated_data)        # delete following relation
                 validated_data = {"author": friendID, "friend": authorID}
-                FollowersViewSet.serializer_class.create(validated_data)    # create one way follower
-                response = Response(responseDictionary)
+                FriendRequestViewSet.serializer_class.delete(validated_data, supress=True)   # delete reverse friend request
+                validated_data = {"author": friendID, "friend": authorID}
+                FollowersViewSet.serializer_class.delete(validated_data, supress=True)       # delete reverse follower
+                FriendViewSet.serializer_class.create(validated_data)           # create friend
+            response = Response(responseDictionary)
     
-            except:
-                responseDictionary["success"] = False
-                response = Response(responseDictionary)
+        except:
+            responseDictionary["success"] = False
+            response = Response(responseDictionary)
     
-            return response
+        return response
+
+    @action(methods=['post'], detail=False, url_path='delete', url_name='friendDelete')
+    def friendDelete(self, request):        
         
-        else:
-            responseDictionary = {"Error":"Page does not exist"}
-            return Response(responseDictionary)
+        # POST /friend/delete
+        responseDictionary = {"query":"frienddelete", "success": True}
             
+        try:
+            try:
+                # swagger
+                body = request.body
+                requestJson = json.loads(body)
+                authorID = requestJson["author"].split('/')[-1]             # person requesting deletion
+                friendID = requestJson["friends"].split('/')[-1]            # friend getting deleted
+                if (authorID == ''):
+                    requestJson["author"].split('/')[-2]
+                if (friendID == ''):
+                    requestJson["friend"].split('/')[-2]
+            except:
+                # html form
+                requestJson = request.data
+                authorID = requestJson["author"].split("/")[-2]
+                friendID = requestJson["friend"].split("/")[-2]
+    
+            if (not (friendID and authorID)):
+                raise ValueError("No friendID or authorID was given")
+            validated_data = {"author": authorID, "friend": friendID}
+            FriendViewSet.serializer_class.delete(validated_data)       # delete friend relation
+            validated_data = {"author": friendID, "friend": authorID}
+            FollowersViewSet.serializer_class.create(validated_data)    # create one way follower
+            response = Response(responseDictionary)
+    
+        except:
+            responseDictionary["success"] = False
+            response = Response(responseDictionary)
+    
+        return response
+        
+           
 
 class AuthorViewSet(viewsets.ModelViewSet):
     """
