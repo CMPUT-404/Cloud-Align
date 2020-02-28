@@ -35,9 +35,11 @@ router.register(r'friendrequestprocess', friends_views.FriendViewSet, basename="
 router.register(r'following', friends_views.FollowersViewSet, basename="following")
 router.register(r'frienddelete', friends_views.FriendViewSet, basename="frienddelete")
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^users/login$', user_views.LoginView.as_view()),
+    url(r'^users/register$', user_views.RegisterView.as_view()),
+
 ]
