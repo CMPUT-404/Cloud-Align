@@ -2,7 +2,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './CardContent.css';
-import { Card, Button } from 'antd';
+import { Card } from 'antd';
 import { Modal} from 'antd';
 import { Input } from 'antd';
 import  { Link } from 'react-router-dom'
@@ -12,7 +12,7 @@ const { TextArea } = Input;
 class CardContent extends React.Component{
     constructor(props){
         super(props)
-        this.state = {
+        this.state = {   
             ModalText: "display a list of comments",
             visible: false,
             confirmLoading: false,

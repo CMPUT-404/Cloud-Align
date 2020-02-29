@@ -5,17 +5,11 @@
     margin-right: 10%;
 }
 
-button{
-    float: right;
-}
-
 #uploadButton{
-    display: flex;
     float: right;
 }
 
-#submitButton{
-    display: flex;
-    justify-content: space-around;
+button#submitButton{
     float: right;
+    margin-top: auto;
 }
