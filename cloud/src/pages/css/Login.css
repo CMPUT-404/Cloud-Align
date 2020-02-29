@@ -1,3 +1,8 @@
+body{
+    background-image: url('../../Images/cloud.JPG');
+    background-size: cover; /*One pic cover the whole background*/
+}
+
 h2, h3{
     text-align: center;
 }

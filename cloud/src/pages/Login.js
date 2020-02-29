@@ -7,7 +7,7 @@ import './css/Login.css';
 class Login extends React.Component {
   render(){  
     return (
-      <div>
+      <body>
         <h2>Welcome to Cloud Align</h2>
         <h3>Login</h3>
         <FormGroup class='login-form'>
@@ -19,7 +19,7 @@ class Login extends React.Component {
           <button id='registerButton'>Register</button>
           <button id='submitButton'>Login</button>
         </FormGroup>
-      </div>
+      </body>
     )
 
   }
