@@ -9,10 +9,20 @@ class Basic_profile extends React.Component{
             name: "",
             email: "",
             phonenumber: "",
+            change: function(){
+                alert("s")
+            }
+           
+            
         }
     }
 
+    
+
     render(){
+
+   
+        
     var request = new XMLHttpRequest()
     request.open('GET',this.props.url)
     request.send()
@@ -25,7 +35,8 @@ class Basic_profile extends React.Component{
     }
 
     
-   
+    
+    
 
     return(
     
@@ -33,12 +44,14 @@ class Basic_profile extends React.Component{
     <div className="container">
 
 
-        <img id="profile_pic" src={require('../../Images/pepe.jpeg')} />
+        <img  id="profile_pic" src={require('../../Images/pepe.jpeg')} />
         
         
         
-        <input class="smallimg" type="image" id="edit_button" src={require('../../Images/edit.jpeg')} />
-        <input class="smallimg" type="image" id="view_profile" src={require('../../Images/view.jpeg')}/>
+        <img onClick={this.props.edit}class="smallimg" type="image" id="edit_button" src={require('../../Images/edit.jpeg')} />
+        
+        
+        <img  class="smallimg" type="image" id="view_profile" src={require('../../Images/view.jpeg')}/>
         <div id="profiletext">
         {this.state.name}<br></br>
         {this.state.email}<br></br>

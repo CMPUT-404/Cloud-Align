@@ -14,7 +14,7 @@ class InputBox extends React.Component{
     }
 
     submitPost(){
-        window.alert('Post has been submitted')
+        var connect = XMLHttpRequest()
     }
 
     pictureHandler = event => {
