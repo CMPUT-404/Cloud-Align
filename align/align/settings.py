@@ -25,7 +25,7 @@ SECRET_KEY = 'y1!!@x7$1bq!==zla(jj@ceqixc#r^yoq90ta-yn1$=)x$+cj$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','testserver']
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
@@ -49,12 +49,12 @@ INSTALLED_APPS = [
     #
     'rest_framework',
     'corsheaders',
-    'django.contrib.sites',  # FIXME not used
+    # 'django.contrib.sites',  # FIXME not used
     #
     'posts.apps.PostsConfig',
     'comments.apps.CommentsConfig',
     'users.apps.UserConfig',
-]
+    'friends.apps.FriendsConfig',]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -85,6 +85,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'align.wsgi.application'
 
@@ -120,6 +122,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
 
 # Internationalization
