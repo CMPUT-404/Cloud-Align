@@ -1,6 +1,10 @@
 import React from 'react';
 import Basic_profile from './Models/Basic_profile';
 import './css/Profile.css';
+import CardContent from '../Components/CardContent';
+
+
+
 
 
 // import {Route,Link,BrowserRouter as Router} from 'react-router-dom';
@@ -13,8 +17,9 @@ class Profile extends React.Component {
     super(props)
     this.state = {
       Props: props,
-      userdata : 'http://162.246.157.219:25565/users/2/',
-      path: "/Timeline"
+      userdata : 'http://162.246.157.219:25565/users/fc89aa45-ce71-43fa-b111-84e1ddecb704/',
+      path: "/Timeline",
+      postComponents : []
     }
   }
 
@@ -38,7 +43,7 @@ class Profile extends React.Component {
   var putreq = new XMLHttpRequest(); 
   putreq.open('PUT',tempdata.userdata,false);
   
-  putreq.setRequestHeader('Authorization', "Basic " + btoa('admin:123456'));
+  putreq.setRequestHeader('Authorization', "Basic " + btoa('joe:123456'));
   putreq.setRequestHeader('Content-Type', 'application/json');
   
   putreq.onreadystatechange = function () {
@@ -62,6 +67,19 @@ class Profile extends React.Component {
 
 
   render(){ 
+
+    let request = new XMLHttpRequest()
+    request.open('GET', 'http://162.246.157.219:25565/posts/')
+    request.send()
+    request.onload = () => {
+      let posts = JSON.parse(request.response)
+      var tempPostList = [] 
+      for(let i=0;i<posts.length;i++){
+        var eachPost = <CardContent post={posts[i]} />
+        tempPostList.push(eachPost)
+      }
+      this.setState({postComponents: tempPostList})
+    }
 
     
       
@@ -98,7 +116,7 @@ class Profile extends React.Component {
 
         
         <div id="B">
-        <Basic_profile tag="moo"/>
+        <Basic_profile url={this.state.userdata}/>
         </div>
           
         
@@ -113,11 +131,21 @@ class Profile extends React.Component {
             <button type="submit"> 
             Save changes
             </button>
+            
 
           </form>
+          <div id="posts">
+            {this.state.postComponents}
+          </div>
           
 
         </div>
+
+        
+        
+
+       
+        
         
        
        

@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
-import Friends from './Pages/Friends';
+import FriendsList from './Pages/Friends/FriendsList';
+import Following from './Pages/Friends/Following';
+import Friends from './Pages/Friends/Friends';
 import Profile from './Pages/Profile';
 import NavBar from './Components/NavBar';
 import Timeline from './Pages/Timeline';
@@ -84,6 +86,8 @@ class App extends React.Component {
           <Switch>
             <Route path="/profile" component={Profile}/>
             <Route path="/friends" component={Friends}/>
+            <Route path="/friendslist" component={FriendsList}/>
+            <Route path="/following" component={Following}/>
             <Route exact path="/timeline" component={Timeline}/>
           </Switch>
         </Router>
