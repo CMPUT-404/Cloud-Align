@@ -14,7 +14,32 @@ class InputBox extends React.Component{
     }
 
     submitPost(){
-        var connect = XMLHttpRequest()
+        var request = new XMLHttpRequest()
+        request.open('POST',this.props.url)
+        // alert(this.props.url)
+       
+        request.setRequestHeader("Content-Type", "application/json")
+        request.setRequestHeader('Authorization', "Basic " + btoa('skrillex:raversfantasy'));
+        request.onreadystatechange = function () {
+            alert(request.responseText)
+            if (request.readyState === 4 && request.status === 200) {
+                var json = JSON.parse(request.responseText);
+                alert(JSON.stringify(json));
+            }
+        };
+
+        var text = document.getElementById("text").innerText
+
+        var data = {}
+        data["text"] = text
+        data["title"] = "poster"
+        data["authro"] = "name"
+        
+        alert(data["text"])
+
+        // request.send('{"username":"AtestCow","password":"123456"}')
+
+       
     }
 
     pictureHandler = event => {
@@ -24,7 +49,7 @@ class InputBox extends React.Component{
     render(){
         return(
             <div id="inputBox">
-                <TextArea rows={7} placeholder="What's on your mind..."/>
+                <TextArea id="text" rows={7} placeholder="What's on your mind..."/>
                 <button id="submitButton" onClick={this.submitPost}>Submit</button>
                 <input id="uploadButton" type="file" alt="image uploaded by user" onChange={this.pictureHandler}/>
             </div>

@@ -10,7 +10,7 @@ import Login from './Pages/Login';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 class App extends React.Component {
   constructor(){
-    super()
+    super() 
     this.state={
       isLoggedIn: true,
     }
