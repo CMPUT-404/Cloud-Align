@@ -6,13 +6,11 @@ import NavBar from './Components/NavBar';
 import Timeline from './Pages/Timeline';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-import  { Link } from 'react-router-dom'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 class App extends React.Component {
   constructor(){
     super()
     this.state={
-      hasAccount: true,
       isLoggedIn: false,
       username: "",
       password: ""
@@ -46,7 +44,7 @@ class App extends React.Component {
   }
 
   register(){
-    alert("register an account")
+    alert("registering your account")
   }
 
   usernameChange(e){
