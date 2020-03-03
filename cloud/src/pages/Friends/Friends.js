@@ -1,7 +1,7 @@
 import React from 'react';
 import CardRequest from './CardRequest';
 import 'antd/dist/antd.css';
-import { Badge, Icon } from 'antd';
+import { Badge } from 'antd';
 import axios from 'axios';
 
 

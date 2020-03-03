@@ -1,10 +1,9 @@
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './FriendsList.css';
 
-import { List, Avatar, Button, Skeleton, Link } from 'antd';
+import { List, Avatar, Button, Skeleton } from 'antd';
 
 import reqwest from 'reqwest';
 
