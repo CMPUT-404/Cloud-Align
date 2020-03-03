@@ -21,7 +21,7 @@ class Edit extends React.Component{
       var name = document.getElementById("name").value;
       if (email != ''){data["email"] = email}
       if (name!=''){data["username"] = name}
-      data["password"] = "raversefantasy"
+      // data["password"] = "raversefantasy"
       
      
       data = JSON.stringify(data);
@@ -34,7 +34,7 @@ class Edit extends React.Component{
       
     
 
-      putreq.setRequestHeader('Authorization', "Basic " + btoa('skrillex:raversfantasy'));
+      putreq.setRequestHeader('Authorization', "Basic " + btoa('vanessa:123456'));
       putreq.setRequestHeader('Content-Type', 'application/json');
 
 

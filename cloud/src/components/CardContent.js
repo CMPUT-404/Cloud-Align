@@ -70,7 +70,12 @@ class CardContent extends React.Component{
                         onOk={this.handleOk}
                         confirmLoading={confirmLoading}
                         onCancel={this.handleCancel}
+                       
                         >
+                        
+                       
+
+
                         <TextArea rows={7} placeholder="Make a comment about this post"/>
                         <p>{ModalText}</p>
                     </Modal>
