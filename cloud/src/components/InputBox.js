@@ -3,7 +3,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Input } from 'antd';
 import './InputBox.css';
-import { Modal} from 'antd';
+
 
 
 const { TextArea } = Input;

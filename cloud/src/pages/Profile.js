@@ -53,7 +53,7 @@ class Profile extends React.Component {
     // };
     // request.send('{"username":"AtestCow","password":"123456"}')
 
-    if (this.state.edit == false){
+    if (this.state.edit === false){
      
 
     let request = new XMLHttpRequest()
@@ -76,7 +76,7 @@ class Profile extends React.Component {
 
         
         <div id="B">
-        <Basic_profile edit={this.state.go_edit} url={this.state.userdata} />
+        <BasicProfile edit={this.state.go_edit} url={this.state.userdata} />
         </div>
 
         
@@ -104,7 +104,7 @@ class Profile extends React.Component {
       
       return(
         <div id="B">
-        <Basic_profile url={this.state.userdata}/>
+        <BasicProfile url={this.state.userdata}/>
         
         <Edit url={this.state.userdata}/>
         </div>
