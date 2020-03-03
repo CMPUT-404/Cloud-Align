@@ -72,6 +72,8 @@ class FriendRequestSerializer(serializers.HyperlinkedModelSerializer):
             if (FriendRequests.objects.filter(authorID=result.friendID.id, friendID=ID).exists()):
                 userData = User.objects.filter(id=result.friendID.id).first()
                 friendhost = userData.host if (userData.host[-1] != '/') else (userData.host[:-1])
+                if ('http' not in friendhost):
+                    friendhost = 'http://' + friendhost
                 friends.append(friendhost + '/author/' + str(userData.id))
                 
         return friends
@@ -154,7 +156,10 @@ class FriendsSerializer(serializers.HyperlinkedModelSerializer):
             following = []
         
             for friend in friends:
-                following.append(friend.friend.host + '/author/' + str(friend.friend.id))   
+                host = friend.friend.host
+                if ('http' not in host):
+                    host = 'http://' + host
+                following.append(host + '/author/' + str(friend.friend.id))   
                 
             return following
         except:
@@ -228,10 +233,16 @@ class FollowersSerializer(serializers.HyperlinkedModelSerializer):
             following = []
             
             for follow in follows:
-                following.append(follow.following.host + '/author/' + str(follow.following.id))
+                host = follow.following.host
+                if ('http' not in host):
+                    host = 'http://' + host
+                following.append(host + '/author/' + str(follow.following.id))
             
             for friend in friends:
-                following.append(friend.friend.host + '/author/' + str(friend.friend.id))
+                host = friend.friend.host
+                if ('http' not in host):
+                    host = 'http://' + host
+                following.append(host + '/author/' + str(friend.friend.id))
             
             return following     
         
