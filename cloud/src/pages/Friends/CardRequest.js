@@ -1,8 +1,9 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Card, Button } from 'antd';
+import { Card, Button} from 'antd';
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 class CardRequest extends React.Component{
 
@@ -16,8 +17,15 @@ class CardRequest extends React.Component{
       }
 }
     increase = () => {
-      const count = this.num.count + 1;
-      this.setState({ count });
+
+      let request = {
+        friend:"http://127.0.0.1:8000/users/70d955d1-7519-47c4-b9ce-6c424bc7ffb4/",
+        author:"http://127.0.0.1:8000/users/bd55c8cb-eecc-418a-90c9-b50aa7e96a13/",
+      }
+      axios.post('http://127.0.0.1:8000/friend/requestprocess/',request)
+        .then(res =>{
+          console.log(res);
+        })
     };
 
     decline = () => {

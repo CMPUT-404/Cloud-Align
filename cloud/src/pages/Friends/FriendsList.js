@@ -2,13 +2,11 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './FriendsList.css';
+import axios from 'axios';
+import { List, Avatar, Button, Skeleton} from 'antd';
 
-import { List, Avatar, Button, Skeleton } from 'antd';
-
-import reqwest from 'reqwest';
 
 const count = 4;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
 
 class FriendsList extends React.Component {
   state = {
@@ -19,26 +17,24 @@ class FriendsList extends React.Component {
   };
 
   componentDidMount() {
-    this.getData(res => {
+    axios.get(`http://127.0.0.1:8000/friend/`).then(res => {
       this.setState({
-        initLoading: false,
-        data: res.results,
-        list: res.results,
-      });
-    });
+        initLoading : false,
+        data: res.data,
+        list: this.dataPre(res.data)
+      })
+    })
   }
 
-  getData = callback => {
-    reqwest({
-      url: fakeDataUrl,
-      type: 'json',
-      method: 'get',
-      contentType: 'application/json',
-      success: res => {
-        callback(res);
-      },
+  dataPre = (data) => {
+    data.forEach((item, i) => {
+      let id = item.friend.split("/").slice(4)[0];
+      item.friendId = id;
+
     });
-  };
+    return data;
+  }
+
 
   onLoadMore = () => {
     this.setState({
@@ -75,7 +71,7 @@ class FriendsList extends React.Component {
             lineHeight: '32px',
           }}
         >
-          <Button onClick={this.onLoadMore} id = "loadmore">loading more </Button>
+
         </div>
       ) : null;
 
@@ -93,8 +89,7 @@ class FriendsList extends React.Component {
                 avatar={
                   <Avatar src={require('../../Images/pepe.jpeg')} />
                 }
-                title={<a href="https://ant.design">{item.name.last}</a>}
-                description="dummy friend list"
+                title={<a href={'/Profile/'+item.friendId}>{item.friend}</a>}
               />
 
             </Skeleton>
