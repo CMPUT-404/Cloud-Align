@@ -1,0 +1,19 @@
+{
+  "name": "cloud-align",
+  "version": "1.0.0",
+  "description": "Contributor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CMPUT-404/Cloud-Align.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CMPUT-404/Cloud-Align/issues"
+  },
+  "homepage": "https://github.com/CMPUT-404/Cloud-Align#readme"
+}
