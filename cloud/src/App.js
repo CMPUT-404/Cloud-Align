@@ -61,12 +61,12 @@ class App extends React.Component {
     console.log(body)
 
     request.onload = () => {
-      if (request.status == 201){
+      if (request.status === 201){
         var jsonResponse = JSON.parse(request.responseText);
         this.setState({userObject: jsonResponse});
         console.log(this.state.userObject);
         this.setState({isLoggedIn:true});
-      }else if (request.status != 200){
+      }else if (request.status !== 200){
         return(
           <Register/>
         )

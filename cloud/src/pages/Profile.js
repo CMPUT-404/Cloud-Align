@@ -1,14 +1,7 @@
 import React from 'react';
-import Basic_profile from './Models/Basic_profile';
+import BasicProfile from './Models/Basic_profile';
 import './css/Profile.css';
 import CardContent from '../Components/CardContent';
-
-
-
-
-
-// import {Route,Link,BrowserRouter as Router} from 'react-router-dom';
-
 
 
 class Profile extends React.Component {
@@ -34,35 +27,23 @@ class Profile extends React.Component {
   var data = {};
   var email = document.getElementById("email").value;
   var name = document.getElementById("name").value;
-  if (email != ''){data["email"] = email}
-  if (name!=''){data["username"] = name}
+  if (email !== ''){data["email"] = email}
+  if (name!==''){data["username"] = name}
  
   data = JSON.stringify(data);
-  
 
   var putreq = new XMLHttpRequest(); 
   putreq.open('PUT',tempdata.userdata,false);
-  
   putreq.setRequestHeader('Authorization', "Basic " + btoa('joe:123456'));
   putreq.setRequestHeader('Content-Type', 'application/json');
-  
   putreq.onreadystatechange = function () {
-     
-      if (putreq.status != 200){
+      if (putreq.status !== 200){
         var json = JSON.parse(putreq.responseText);
         alert(JSON.stringify(json));
       }
       
     };
-
- 
-
   putreq.send(data);
-
-   
-   
-
-    
   }
 
 
@@ -80,10 +61,6 @@ class Profile extends React.Component {
       }
       this.setState({postComponents: tempPostList})
     }
-
-    
-      
-    
 
     // GET
     // var request = new XMLHttpRequest()
@@ -108,7 +85,6 @@ class Profile extends React.Component {
     // };
     // request.send('{"username":"AtestCow","password":"123456"}')
 
-      
 
     return (
       
@@ -116,11 +92,8 @@ class Profile extends React.Component {
 
         
         <div id="B">
-        <Basic_profile url={this.state.userdata}/>
+        <BasicProfile url={this.state.userdata}/>
         </div>
-          
-        
-        
 
         <div id="form">
           <form className="form"  onSubmit={ ()=>this.save_change(this.state)} id="changes">
@@ -131,25 +104,11 @@ class Profile extends React.Component {
             <button type="submit"> 
             Save changes
             </button>
-            
-
           </form>
           <div id="posts">
             {this.state.postComponents}
           </div>
-          
-
-        </div>
-
-        
-        
-
-       
-        
-        
-       
-       
-    
+        </div>    
       </div>
 
 
