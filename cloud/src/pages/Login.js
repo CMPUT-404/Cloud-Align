@@ -28,8 +28,10 @@ class Login extends React.Component {
             <Label>Enter Your Password</Label>
             <Input id='passwordInput' type='password' placeholder='Password' value={this.props.password} onChange={this.props.passwordChange}/>
             <Label>Don't have an account? Click on the register button</Label>
-            <button id='registerButton' onClick={() => this.register()}>Register</button>
-            <button id='submitButton' onClick={this.props.handleLogin}>Login</button>
+            <div className='buttonDiv'>
+              <button id='registerButton' onClick={() => this.register()}>Register</button>
+              <button id='submitButton' onClick={this.props.handleLogin}>Login</button>
+            </div>
           </FormGroup>
         </div>
       )
@@ -46,7 +48,7 @@ class Login extends React.Component {
             <Label>Enter Your Email</Label>
             <Input id='emailInput' type='text' placeholder='Email' value={this.props.email} onChange={this.props.emailChange}/>
             <Label>Enter the Link to Your Github Account</Label>
-            <Input id='githubInput' type='text' placeholder='Github Link' value={this.props.githubLink} onChange={this.props.githubChange}/>
+            <Input id='githubInput' type='text' placeholder='Github Link' value={this.props.github} onChange={this.props.githubChange}/>
             <button id='newAccountButton' onClick={this.props.register}>Register</button>
           </FormGroup>
         </div>

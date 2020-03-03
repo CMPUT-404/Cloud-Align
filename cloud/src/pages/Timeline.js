@@ -7,7 +7,9 @@ class Timeline extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      "postComponents": []
+      "postComponents": [],
+      url: 'http://162.246.157.219:25565/posts/'
+
     }
     this.getPosts = this.getPosts.bind(this);
     this.getPosts();
@@ -16,7 +18,7 @@ class Timeline extends React.Component {
 
   getPosts(){
     let request = new XMLHttpRequest()
-    request.open('GET', 'http://162.246.157.219:25565/posts/')
+    request.open('GET', this.state.url)
     request.send()
     request.onload = () => {
       let posts = JSON.parse(request.response)
@@ -33,7 +35,7 @@ class Timeline extends React.Component {
   render(){
     return(
       <div className="Timeline">
-        <InputBox id="InputBox"/>
+        <InputBox id="InputBox" url={this.state.url}/>
         {this.state.postComponents}
       </div>
     )
