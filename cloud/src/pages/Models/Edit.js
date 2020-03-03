@@ -1,14 +1,6 @@
-
-
 import React from 'react';
 
 class Edit extends React.Component{
-    constructor(props){
-        super(props)
-
-        
-
-    }
 
     save_change(tempdata){
 
@@ -19,8 +11,8 @@ class Edit extends React.Component{
       var data = {};
       var email = document.getElementById("email").value;
       var name = document.getElementById("name").value;
-      if (email != ''){data["email"] = email}
-      if (name!=''){data["username"] = name}
+      if (email !== ''){data["email"] = email}
+      if (name!==''){data["username"] = name}
       // data["password"] = "raversefantasy"
       
      
@@ -41,7 +33,7 @@ class Edit extends React.Component{
       
       putreq.onreadystatechange = function () {
          
-          if (putreq.status != 200){
+          if (putreq.status !== 200){
             var json = JSON.parse(putreq.responseText);
             alert(JSON.stringify(json));
           }

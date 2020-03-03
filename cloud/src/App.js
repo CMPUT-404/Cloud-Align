@@ -13,7 +13,7 @@ class App extends React.Component {
   constructor(){
     super() 
     this.state={
-      isLoggedIn: false,
+      isLoggedIn: true,
       username: "",
       password: "",
       github: "",
@@ -115,6 +115,7 @@ class App extends React.Component {
             <Route path="/friendslist" component={FriendsList}/>
             <Route path="/following" component={Following}/>
             <Route exact path="/timeline" component={Timeline}/>
+            {/* <Route path="/Post" component={} ></Route> */}
           </Switch>
         </Router>
       );
