@@ -28,8 +28,10 @@ class Login extends React.Component {
             <Label>Enter Your Password</Label>
             <Input id='passwordInput' type='password' placeholder='Password' value={this.props.password} onChange={this.props.passwordChange}/>
             <Label>Don't have an account? Click on the register button</Label>
-            <button id='registerButton' onClick={() => this.register()}>Register</button>
-            <button id='submitButton' onClick={this.props.handleLogin}>Login</button>
+            <div class='buttonDiv'>
+              <button id='registerButton' onClick={() => this.register()}>Register</button>
+              <button id='submitButton' onClick={this.props.handleLogin}>Login</button>
+            </div>
           </FormGroup>
         </div>
       )

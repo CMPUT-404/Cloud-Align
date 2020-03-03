@@ -19,24 +19,22 @@ Label{
     max-width: 330px;
     padding: 15px;
     margin: auto;
+    display: block;
 }
 
 
-#submitButton, #registerButton{
-    margin-top: 15px;
-    margin-left: 230pt;
+div.buttonDiv{
+    display: block;        
     border-color: rgb(152, 255, 255);    
     border-radius: 15%;
     padding: 10px 20px;
     text-align: center;
-    text-decoration: none;
-    float: left;
     font-size: 16px;
-    cursor: pointer;
     width:20%;
-    text-align:center;
-    
+    display: block;
+    margin: auto;
 }
+
 
 #submitButton:hover, #registerButton:hover, #newAccountButton:hover{
     background-color:  rgb(152, 255, 255);
