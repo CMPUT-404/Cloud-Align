@@ -11,9 +11,12 @@ class Timeline extends React.Component {
       url: 'http://162.246.157.219:25565/posts/'
 
     }
+    this.getPosts = this.getPosts.bind(this);
+    this.getPosts();
   }
 
-  render(){
+
+  getPosts(){
     let request = new XMLHttpRequest()
     request.open('GET', this.state.url)
     request.send()
@@ -26,7 +29,10 @@ class Timeline extends React.Component {
       }
       this.setState({postComponents: tempPostList})
     }
+  }
 
+
+  render(){
     return(
       <div className="Timeline">
         <InputBox id="InputBox" url={this.state.url}/>

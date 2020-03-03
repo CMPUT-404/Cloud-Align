@@ -1,15 +1,8 @@
 import React from 'react';
-import Basic_profile from './Models/Basic_profile';
+import BasicProfile from './Models/Basic_profile';
 import './css/Profile.css';
 import CardContent from '../Components/CardContent';
 import Edit from './Models/Edit';
-
-
-
-
-
-// import {Route,Link,BrowserRouter as Router} from 'react-router-dom';
-
 
 
 class Profile extends React.Component {
@@ -85,9 +78,6 @@ class Profile extends React.Component {
         <div id="B">
         <Basic_profile edit={this.state.go_edit} url={this.state.userdata} />
         </div>
-          
-        
-        
 
         
 
